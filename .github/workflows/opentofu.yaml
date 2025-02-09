@@ -43,10 +43,8 @@ jobs:
         with:
           tofu_version: ${{ env.TOFU_VERSION }}
 
-      - name: Change Directory to Infrastructure
-        run: cd infrastructure/
-
       - name: Initialize OpenTofu with Backend
+        working-directory: infrastructure
         run: |
           tofu init \
             -backend-config="bucket=${S3_BUCKET_NAME}" \
@@ -55,13 +53,16 @@ jobs:
             -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}"
 
       - name: Plan OpenTofu Changes
+        working-directory: infrastructure
         run: tofu plan -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
+        working-directory: infrastructure
         if: github.ref == 'refs/heads/main'
         run: tofu apply -auto-approve tfplan
 
       - name: Generate OpenTofu Plan Output
+        working-directory: infrastructure
         if: github.event_name == 'pull_request'
         run: |
           echo '```json' > plan_output.md
@@ -69,7 +70,7 @@ jobs:
           echo '```' >> plan_output.md
 
       - name: Post Plan Output as PR Comment
-        if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: plan_output.md
+          path: infrastructure/plan_output.md
+        if: github.event_name == 'pull_request'
