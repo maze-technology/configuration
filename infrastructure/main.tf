@@ -1,6 +1,7 @@
 terraform {
   backend "s3" {
-
+    encrypt = true
+    key     = "github/terraform.tfstate"
   }
 
   required_providers {
