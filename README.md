@@ -37,6 +37,7 @@ Configure all Maze Technologies Github repositories using OpenTofu
    - `S3_BUCKET_NAME` (value from `s3_bucket_name` output)
    - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output)
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output)
+   - `MAZE_GITHUB_OWNER` (GitHub organization name)
 
 ### Step 4: Deploy OpenTofu Configuration
 

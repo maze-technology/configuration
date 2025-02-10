@@ -21,6 +21,7 @@ env:
   KMS_KEY_ALIAS: ${{ vars.KMS_KEY_ALIAS }}
   MAZE_GITHUB_ACTIONS_ROLE_ARN: ${{ secrets.MAZE_GITHUB_ACTIONS_ROLE_ARN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  MAZE_GITHUB_OWNER: ${{ vars.MAZE_GITHUB_OWNER }}
   TOFU_VERSION: "1.9.0"
 
 jobs:
@@ -50,7 +51,8 @@ jobs:
             -backend-config="bucket=${S3_BUCKET_NAME}" \
             -backend-config="region=${AWS_REGION}" \
             -backend-config="kms_key_id=${KMS_KEY_ALIAS}" \
-            -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}"
+            -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}" \
+            -var="github_owner=${GITHUB_OWNER}"
 
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
