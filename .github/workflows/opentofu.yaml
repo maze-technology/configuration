@@ -66,8 +66,9 @@ jobs:
         working-directory: infrastructure
         if: github.event_name == 'pull_request'
         run: |
+          tofu show -json tfplan > tfplan.json
           echo '```json' > plan_output.md
-          jq '.' tfplan >> plan_output.md
+          jq '.' tfplan.json >> plan_output.md
           echo '```' >> plan_output.md
 
       - name: Post Plan Output as PR Comment
