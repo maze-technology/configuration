@@ -51,17 +51,16 @@ jobs:
             -backend-config="bucket=${S3_BUCKET_NAME}" \
             -backend-config="region=${AWS_REGION}" \
             -backend-config="kms_key_id=${KMS_KEY_ALIAS}" \
-            -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}" \
-            -var="github_owner=${GITHUB_OWNER}"
+            -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}"
 
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
-        run: tofu plan -out=tfplan
+        run: tofu plan -var="github_owner=${GITHUB_OWNER}" -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
         if: github.ref == 'refs/heads/main'
-        run: tofu apply -auto-approve tfplan
+        run: tofu apply -auto-approve -var="github_owner=${GITHUB_OWNER}" tfplan
 
       - name: Generate OpenTofu Plan Output
         working-directory: infrastructure
