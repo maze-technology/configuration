@@ -60,7 +60,7 @@ jobs:
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
         if: github.ref == 'refs/heads/main'
-        run: tofu apply -auto-approve -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GITHUB_TOKEN}" tfplan
+        run: tofu apply -auto-approve tfplan
 
       - name: Generate OpenTofu Plan Output
         working-directory: infrastructure
