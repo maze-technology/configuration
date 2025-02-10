@@ -9,7 +9,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   id-token: write
 
@@ -55,12 +55,12 @@ jobs:
 
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
-        run: tofu plan -var="github_owner=${GITHUB_OWNER}" -out=tfplan
+        run: tofu plan -var="github_owner=${GITHUB_OWNER}" -var="github_token=${GITHUB_TOKEN}" -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
         if: github.ref == 'refs/heads/main'
-        run: tofu apply -auto-approve -var="github_owner=${GITHUB_OWNER}" tfplan
+        run: tofu apply -auto-approve -var="github_owner=${GITHUB_OWNER}" -var="github_token=${GITHUB_TOKEN}" tfplan
 
       - name: Generate OpenTofu Plan Output
         working-directory: infrastructure
