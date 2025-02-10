@@ -25,7 +25,8 @@
       "Action": [
         "dynamodb:DescribeTable",
         "dynamodb:PutItem",
-        "dynamodb:GetItem"
+        "dynamodb:GetItem",
+        "dynamodb:DeleteItem"
       ],
       "Resource": [
         "${DYNAMODB_TABLE_ARN}"

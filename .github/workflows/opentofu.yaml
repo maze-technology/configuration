@@ -67,7 +67,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           echo '```json' > plan_output.md
-          jq '.' plan.json >> plan_output.md
+          jq '.' tfplan >> plan_output.md
           echo '```' >> plan_output.md
 
       - name: Post Plan Output as PR Comment
