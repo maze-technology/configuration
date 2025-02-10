@@ -66,8 +66,19 @@ jobs:
         working-directory: infrastructure
         if: github.event_name == 'pull_request'
         run: |
-          tofu show -json tfplan > tfplan.json
-          echo '```json' > plan_output.md
+          tofu show -json tfplan | jq '.' > tfplan.json
+
+          echo "### OpenTofu Plan Summary 🚀" > plan_output.md
+          echo "" >> plan_output.md
+          echo "**Changes:**" >> plan_output.md
+          jq -r '
+            .resource_changes[] |
+            "🔹 \(.type) `\(.name)` - \(.change.actions | join(", "))"
+          ' tfplan.json >> plan_output.md
+          echo "" >> plan_output.md
+
+          echo "**Detailed Changes:**" >> plan_output.md
+          echo '```json' >> plan_output.md
           jq '.' tfplan.json >> plan_output.md
           echo '```' >> plan_output.md
 
