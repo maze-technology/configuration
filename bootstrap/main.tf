@@ -84,6 +84,7 @@ resource "aws_iam_role_policy" "github_actions_policy" {
   policy = templatefile("iam/github-actions-policy.json", {
     S3_BUCKET_ARN           = aws_s3_bucket.github_opentofu_state.arn
     DYNAMODB_TABLE_ARN      = aws_dynamodb_table.github_opentofu_state_locks.arn
+    KMS_KEY_ARN             = aws_kms_key.github_opentofu_state_key.arn
     KMS_KEY_ALIAS_ARN       = aws_kms_alias.github_opentofu_state_key_alias.arn
     GITHUB_ACTIONS_ROLE_ARN = aws_iam_role.github_actions_role.arn
   })
