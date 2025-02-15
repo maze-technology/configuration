@@ -79,14 +79,14 @@ jobs:
           ORG_NAME="${{ github.repository_owner }}"
           REPO_NAME="${{ github.event.repository.name }}"
 
-          TF_LOG=TRACE tofu import \
+          TF_LOG=INFO GITHUB_TOKEN=${GH_APP_TOKEN} tofu import \
             -var="github_owner=${MAZE_GITHUB_OWNER}" \
             -var="github_token=${GH_APP_TOKEN}" \
             github_repository.github-configuration \
             "$ORG_NAME/$REPO_NAME"
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
-        run: GITHUB_TOKEN=${GH_APP_TOKEN} tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
+        run: tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
