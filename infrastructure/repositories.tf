@@ -3,7 +3,7 @@
 resource "github_repository" "github-configuration" {
   name                    = "github-configuration"
   description             = "Repository managing the Github ones"
-  visibility              = "public"
+  visibility              = "private"
   has_issues              = true
   has_wiki                = false
   has_projects            = false
