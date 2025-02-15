@@ -38,26 +38,32 @@ jobs:
           role-session-name: MazeGitHubActionsSession
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Authenticate GitHub App via OIDC
-        id: auth
+      # - name: Authenticate GitHub App via OIDC
+      #   id: auth
+      #   run: |
+      #     echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
+      #     chmod 600 private-key.pem
+
+      #     GH_APP_ID=${{ secrets.GH_APP_ID }}
+      #     GH_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}
+
+      #     # Generate JWT for GitHub App authentication
+      #     JWT=$(ruby -rjwt -rtime -ropenssl -e "puts JWT.encode({iat: Time.now.to_i, exp: Time.now.to_i + 600, iss: $GH_APP_ID}, OpenSSL::PKey::RSA.new(File.read('private-key.pem')), 'RS256')")
+
+      #     # Request an installation access token
+      #     GH_APP_TOKEN=$(curl -s -X POST \
+      #       -H "Authorization: Bearer $JWT" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       https://api.github.com/app/installations/$GH_APP_INSTALLATION_ID/access_tokens | jq -r .token)
+
+      #     # Store the token in the environment for later steps
+      #     echo "GH_APP_TOKEN=$GH_APP_TOKEN" >> $GITHUB_ENV
+
+      - name: Set GITHUB_ env vars
         run: |
-          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
-          chmod 600 private-key.pem
-
-          GH_APP_ID=${{ secrets.GH_APP_ID }}
-          GH_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}
-
-          # Generate JWT for GitHub App authentication
-          JWT=$(ruby -rjwt -rtime -ropenssl -e "puts JWT.encode({iat: Time.now.to_i, exp: Time.now.to_i + 600, iss: $GH_APP_ID}, OpenSSL::PKey::RSA.new(File.read('private-key.pem')), 'RS256')")
-
-          # Request an installation access token
-          GH_APP_TOKEN=$(curl -s -X POST \
-            -H "Authorization: Bearer $JWT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/app/installations/$GH_APP_INSTALLATION_ID/access_tokens | jq -r .token)
-
-          # Store the token in the environment for later steps
-          echo "GH_APP_TOKEN=$GH_APP_TOKEN" >> $GITHUB_ENV
+          echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
+          echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
+          echo "GITHUB_APP_PEM_FILE=${{ secrets.GH_APP_PRIVATE_KEY }}" >> $GITHUB_ENV
 
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
@@ -73,20 +79,21 @@ jobs:
             -backend-config="kms_key_id=${KMS_KEY_ALIAS}" \
             -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}"
 
-      - name: Import current repository into Tofu state
+      - name: Import current repository into OpenTofu state
         working-directory: infrastructure
         run: |
           ORG_NAME="${{ github.repository_owner }}"
           REPO_NAME="${{ github.event.repository.name }}"
 
-          TF_LOG=INFO GITHUB_OWNER=${MAZE_GITHUB_OWNER} GITHUB_TOKEN=${GH_APP_TOKEN} tofu import \
+          TF_LOG=INFO tofu import \
             -var="github_owner=${MAZE_GITHUB_OWNER}" \
-            -var="github_token=${GH_APP_TOKEN}" \
             github_repository.github-configuration \
             "$ORG_NAME/$REPO_NAME"
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
-        run: tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
+        run: tofu plan \
+          -var="github_owner=${MAZE_GITHUB_OWNER}" \
+          -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
