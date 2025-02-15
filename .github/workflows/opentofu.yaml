@@ -86,7 +86,7 @@ jobs:
             "$ORG_NAME/$REPO_NAME"
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
-        run: tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
+        run: GITHUB_TOKEN=${GH_APP_TOKEN} tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
         working-directory: infrastructure
