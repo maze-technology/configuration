@@ -41,12 +41,14 @@ jobs:
       - name: Authenticate GitHub App via OIDC
         id: auth
         run: |
+          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
+          chmod 600 private-key.pem
+
           GH_APP_ID=${{ secrets.GH_APP_ID }}
           GH_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}
-          GH_APP_PRIVATE_KEY="${{ secrets.GH_APP_PRIVATE_KEY }}"
 
           # Generate JWT for GitHub App authentication
-          JWT=$(ruby -rjwt -rtime -ropenssl -e "puts JWT.encode({iat: Time.now.to_i, exp: Time.now.to_i + 600, iss: $GH_APP_ID}, OpenSSL::PKey::RSA.new(Base64.decode64('$GH_APP_PRIVATE_KEY')), 'RS256')")
+          JWT=$(ruby -rjwt -rtime -ropenssl -e "puts JWT.encode({iat: Time.now.to_i, exp: Time.now.to_i + 600, iss: $GH_APP_ID}, OpenSSL::PKey::RSA.new(File.read('private-key.pem')), 'RS256')")
 
           # Request an installation access token
           GH_APP_TOKEN=$(curl -s -X POST \
