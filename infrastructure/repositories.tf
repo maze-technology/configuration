@@ -3,7 +3,7 @@
 # BUG: Can't make it work when defining the github-configuration repository
 # resource "github_repository" "github-configuration" {
 #   name                    = "github-configuration"
-#   description             = "Repository managing the Github ones"
+#   description             = "Repository for managing GitHub repositories"
 #   visibility              = "private"
 #   has_issues              = true
 #   has_wiki                = false
