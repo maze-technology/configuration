@@ -59,8 +59,9 @@ jobs:
       #     # Store the token in the environment for later steps
       #     echo "GH_APP_TOKEN=$GH_APP_TOKEN" >> $GITHUB_ENV
 
-      - name: Set GITHUB_ env vars
+      - name: Set GITHUB_* env vars
         run: |
+          echo "GITHUB_OWNER=${MAZE_GITHUB_OWNER}" >> $GITHUB_ENV
           echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
           echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
 
