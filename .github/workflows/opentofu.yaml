@@ -76,10 +76,7 @@ jobs:
       - name: Import current repository into Tofu state
         working-directory: infrastructure
         run: |
-          ORG_NAME="${{ github.repository_owner }}"
-          REPO_NAME="${{ github.event.repository.name }}"
-
-          tofu import -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" github_repository.github-configuration "$ORG_NAME/$REPO_NAME"
+          tofu import -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" github_repository.github-configuration "${{ github.repository_owner }}/${{ github.event.repository.name }}"
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
         run: tofu plan -var="github_owner=${MAZE_GITHUB_OWNER}" -var="github_token=${GH_APP_TOKEN}" -out=tfplan
