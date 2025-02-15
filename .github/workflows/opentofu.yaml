@@ -59,11 +59,16 @@ jobs:
       #     # Store the token in the environment for later steps
       #     echo "GH_APP_TOKEN=$GH_APP_TOKEN" >> $GITHUB_ENV
 
+      - name: Store GitHub App Private Key
+        run: |
+          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > gh_app_private_key.pem
+          chmod 600 gh_app_private_key.pem
+
       - name: Set GITHUB_ env vars
         run: |
           echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
           echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
-          echo "GITHUB_APP_PEM_FILE=${{ secrets.GH_APP_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "GITHUB_APP_PEM_FILE=gh_app_private_key.pem" >> $GITHUB_ENV
 
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
