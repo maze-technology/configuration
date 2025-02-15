@@ -64,10 +64,8 @@ jobs:
           echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
           echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
 
-          # Store the private key in a multi-line safe environment variable
-          echo "GITHUB_APP_PEM_FILE<<EOF" >> $GITHUB_ENV
-          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          # Convert multi-line PEM key to single-line format (replace newlines with '\n')
+          echo "GITHUB_APP_PEM_FILE=$(echo "${{ secrets.GH_APP_PRIVATE_KEY }}" | awk '{printf "%s\\n", $0}')" >> $GITHUB_ENV
 
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
