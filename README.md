@@ -7,8 +7,24 @@ Configure all Maze Technologies Github repositories using OpenTofu
 ### Step 1: Initialization
 1. You need OpenTofu 1.9.0 installed
 
-### Step 2: Initialize the Bootstrap Folder
+### Step 2: Create a GitHub App
+1. Go to your GitHub organization settings and navigate to "Developer settings" > "GitHub Apps".
+2. Click "New GitHub App" and fill in the required details:
+   - **GitHub App name**: Maze GitHub App
+   - **Homepage URL**: Your organization's homepage URL
+   - **Webhook URL**: Leave blank for now
+   - **Webhook secret**: Leave blank for now
+   - **Repository permissions**: Set the following permissions:
+     - **Contents**: Read & write
+     - **Metadata**: Read-only
+   - **Organization permissions**: Set the following permissions:
+     - **Members**: Read-only
+   - **Subscribe to events**: Check "Push" and "Pull request"
+3. Click "Create GitHub App".
+4. Generate a private key for the GitHub App and download it.
+5. Note the **App ID** and **Installation ID** for later use.
 
+### Step 3: Initialize the Bootstrap Folder
 1. Open a terminal in the repository root folder and navigate to the `bootstrap/` directory:
    ```sh
    cd ./bootstrap/
@@ -23,14 +39,16 @@ Configure all Maze Technologies Github repositories using OpenTofu
    ```
 4. Note the output keys=values for later use
 
-### Step 3: Configure the GitHub Repository
-
+### Step 4: Configure the GitHub Repository
 1. Go to your GitHub repository settings.
 2. Navigate to the "Secrets and variables" section and add the following:
 
    **Secrets:**
    - `AWS_ACCOUNT_ID`
    - `MAZE_GITHUB_ACTIONS_ROLE_ARN` (value from `maze_github_actions_role_arn` output)
+   - `GH_APP_ID` (GitHub App ID from Step 2)
+   - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
+   - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
 
    **Variables:**
    - `AWS_REGION`
@@ -39,8 +57,7 @@ Configure all Maze Technologies Github repositories using OpenTofu
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output)
    - `MAZE_GITHUB_OWNER` (GitHub organization name)
 
-### Step 4: Deploy OpenTofu Configuration
-
+### Step 5: Deploy OpenTofu Configuration
 The GitHub Actions workflow (`opentofu.yaml`) will automatically run on pushes or pull requests to the `main` branch. This workflow will:
 - Checkout the repository.
 - Configure AWS credentials using OIDC.
