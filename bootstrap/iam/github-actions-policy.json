@@ -37,7 +37,8 @@
       "Action": [
         "kms:Encrypt",
         "kms:Decrypt",
-        "kms:DescribeKey"
+        "kms:DescribeKey",
+        "kms:GenerateDataKey"
       ],
       "Resource": [
         "${KMS_KEY_ALIAS_ARN}"
@@ -46,6 +47,9 @@
     {
       "Effect": "Allow",
       "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:DescribeKey",
         "kms:GenerateDataKey"
       ],
       "Resource": [
