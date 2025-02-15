@@ -20,9 +20,9 @@
 #   vulnerability_alerts    = true
 # }
 
-resource "github_repository" "java-microservice-template" {
-  name                    = "java-microservice-template"
-  description             = "Java microservice base template repository"
+resource "github_repository" "java-service-template" {
+  name                    = "java-service-template"
+  description             = "Java service base template repository"
   visibility              = "public"
   has_issues              = true
   has_wiki                = false
