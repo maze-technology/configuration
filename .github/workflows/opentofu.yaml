@@ -38,6 +38,12 @@ jobs:
           role-session-name: MazeGitHubActionsSession
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Write to file the GitHub App Private Key
+        working-directory: infrastructure
+        run: |
+          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
+          chmod 600 private-key.pem
+
       # - name: Authenticate GitHub App via OIDC
       #   id: auth
       #   run: |
@@ -59,14 +65,14 @@ jobs:
       #     # Store the token in the environment for later steps
       #     echo "GH_APP_TOKEN=$GH_APP_TOKEN" >> $GITHUB_ENV
 
-      - name: Set GITHUB_* env vars
-        run: |
-          echo "GITHUB_OWNER=${MAZE_GITHUB_OWNER}" >> $GITHUB_ENV
-          echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
-          echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
+      # - name: Set GITHUB_* env vars
+      #   run: |
+      #     echo "GITHUB_OWNER=${MAZE_GITHUB_OWNER}" >> $GITHUB_ENV
+      #     echo "GITHUB_APP_ID=${{ secrets.GH_APP_ID }}" >> $GITHUB_ENV
+      #     echo "GITHUB_APP_INSTALLATION_ID=${{ secrets.GH_APP_INSTALLATION_ID }}" >> $GITHUB_ENV
 
-          # Convert multi-line PEM key to single-line format (replace newlines with '\n')
-          echo "GITHUB_APP_PEM_FILE=$(echo "${{ secrets.GH_APP_PRIVATE_KEY }}" | awk '{printf "%s\\n", $0}')" >> $GITHUB_ENV
+      #     # Convert multi-line PEM key to single-line format (replace newlines with '\n')
+      #     echo "GITHUB_APP_PEM_FILE=$(echo "${{ secrets.GH_APP_PRIVATE_KEY }}" | awk '{printf "%s\\n", $0}')" >> $GITHUB_ENV
 
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
@@ -90,12 +96,18 @@ jobs:
 
           TF_LOG=INFO tofu import \
             -var="github_owner=${MAZE_GITHUB_OWNER}" \
+            -var="github_app_id=${{ secrets.GH_APP_ID }}" \
+            -var="github_app_installation_id=${{ secrets.GH_APP_INSTALLATION_ID }}" \
+            -var="github_app_private_key_path=private-key.pem" \
             github_repository.github-configuration \
             "$ORG_NAME/$REPO_NAME"
       - name: Plan OpenTofu Changes
         working-directory: infrastructure
         run: tofu plan \
           -var="github_owner=${MAZE_GITHUB_OWNER}" \
+          -var="github_app_id=${{ secrets.GH_APP_ID }}" \
+          -var="github_app_installation_id=${{ secrets.GH_APP_INSTALLATION_ID }}" \
+          -var="github_app_private_key_path=private-key.pem" \
           -out=tfplan
 
       - name: Apply OpenTofu Changes (Only on Main)
