@@ -26,7 +26,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
    ```sh
    cd ./bootstrap/
    ```
-2. Run the following command to initialize OpenTofu with the backend configuration:
+2. Run the following command to initialize OpenTofu:
    ```sh
    tofu init
    ```
