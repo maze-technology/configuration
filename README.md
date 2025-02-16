@@ -10,16 +10,13 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
 ### Step 2: Create a GitHub App
 1. Go to your GitHub organization settings and navigate to "Developer settings" > "GitHub Apps".
 2. Click "New GitHub App" and fill in the required details:
-   - **GitHub App name**: Maze GitHub App
-   - **Homepage URL**: Your organization's homepage URL
-   - **Webhook URL**: Leave blank for now
-   - **Webhook secret**: Leave blank for now
    - **Repository permissions**: Set the following permissions:
+     - **Administration**: Read & write
      - **Contents**: Read & write
      - **Metadata**: Read-only
    - **Organization permissions**: Set the following permissions:
+     - **Administration**: Read & write
      - **Members**: Read & write
-   - **Subscribe to events**: Check "Push" and "Pull request"
 3. Click "Create GitHub App".
 4. Generate a private key for the GitHub App and download it.
 5. Note the **App ID** and **Installation ID** for later use.
