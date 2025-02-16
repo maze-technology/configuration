@@ -13,7 +13,7 @@ output "dynamodb_table_name" {
   value       = aws_dynamodb_table.github_opentofu_state_locks.name
 }
 
-output "maze_github_actions_role_arn" {
+output "gh_actions_role_arn" {
   description = "The ARN of the IAM role used by GitHub Actions"
   value       = aws_iam_role.github_actions_role.arn
 }

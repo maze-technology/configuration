@@ -7,7 +7,7 @@ variable "github_username" {
   type        = string
 }
 
-variable "github_repo" {
+variable "github_repository" {
   description = "GitHub repository name"
   type        = string
 }

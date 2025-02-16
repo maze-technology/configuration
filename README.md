@@ -32,7 +32,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
    ```
 3. Run the following command to apply the OpenTofu scripts, replace the values with yours:
    ```sh
-   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu apply -var="aws_account_id=YOUR_COMPANY_AWS_ACCOUNT_ID" -var="github_username=YOUR_COMPANY_GITHUB_USERNAME" -var="github_repo=YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY" -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
+   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu apply -var="aws_account_id=YOUR_COMPANY_AWS_ACCOUNT_ID" -var="github_username=YOUR_COMPANY_GITHUB_USERNAME" -var="github_repository=YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY" -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
    ```
 4. Note the output keys=values for later use
 
@@ -41,8 +41,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
 2. Navigate to the "Secrets and variables" section and add the following:
 
    **Secrets:**
-   - `AWS_ACCOUNT_ID`
-   - `MAZE_GITHUB_ACTIONS_ROLE_ARN` (value from `maze_github_actions_role_arn` output)
+   - `GH_ACTIONS_ROLE_ARN` (value from `gh_actions_role_arn` output)
    - `GH_APP_ID` (GitHub App ID from Step 2)
    - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
    - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
@@ -52,7 +51,6 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
    - `S3_BUCKET_NAME` (value from `s3_bucket_name` output)
    - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output)
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output)
-   - `MAZE_GITHUB_OWNER` (GitHub organization name)
 
 ### Step 5: Deploy OpenTofu Configuration
 The GitHub Actions workflow (`opentofu.yaml`) will automatically run on pushes or pull requests to the `main` branch. This workflow will:

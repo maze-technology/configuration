@@ -71,10 +71,10 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
 resource "aws_iam_role" "github_actions_role" {
   name = "${local.formatted_default_tags_values}_GitHubActionsRole"
 
-  assume_role_policy = templatefile("iam/github-actions-trust-policy.json", {
-    AWS_ACCOUNT_ID  = var.aws_account_id
-    GITHUB_USERNAME = var.github_username
-    GITHUB_REPO     = var.github_repo
+  assume_role_policy      = templatefile("iam/github-actions-trust-policy.json", {
+    AWS_ACCOUNT_ID        = var.aws_account_id
+    GITHUB_USERNAME       = var.github_username
+    GITHUB_REPOSITORY     = var.github_repository
   })
 }
 
