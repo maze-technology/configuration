@@ -32,7 +32,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
    ```
 3. Run the following command to apply the OpenTofu scripts, replace the values with yours:
    ```sh
-   AWS_REGION="YOUR_AWS_REGION" AWS_PROFILE="YOUR_AWS_PROFILE" tofu apply -var="aws_account_id=YOUR_AWS_ACCOUNT_ID" -var="github_username=YOUR_GITHUB_USERNAME" -var="github_repo=YOUR_GITHUB_REPO" -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
+   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu apply -var="aws_account_id=YOUR_COMPANY_AWS_ACCOUNT_ID" -var="github_username=YOUR_COMPANY_GITHUB_USERNAME" -var="github_repo=YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY" -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
    ```
 4. Note the output keys=values for later use
 
