@@ -41,13 +41,13 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
 2. Navigate to the "Secrets and variables" section and add the following:
 
    **Secrets:**
-   - `GH_ACTIONS_ROLE_ARN` (value from `gh_actions_role_arn` output)
+   - `GH_ACTIONS_ROLE_ARN` (value from `gh_actions_role_arn` output in Step 3)
    - `GH_APP_ID` (GitHub App ID from Step 2)
    - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
    - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
 
    **Variables:**
-   - `AWS_REGION`
-   - `S3_BUCKET_NAME` (value from `s3_bucket_name` output)
-   - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output)
-   - `KMS_KEY_ALIAS` (value from `kms_key_alias` output)
+   - `AWS_REGION` (AWS Region from Step 3)
+   - `S3_BUCKET_NAME` (value from `s3_bucket_name` output in Step 3)
+   - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output in Step 3)
+   - `KMS_KEY_ALIAS` (value from `kms_key_alias` output in Step 3)
