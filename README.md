@@ -18,7 +18,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
      - **Contents**: Read & write
      - **Metadata**: Read-only
    - **Organization permissions**: Set the following permissions:
-     - **Members**: Read-only
+     - **Members**: Read & write
    - **Subscribe to events**: Check "Push" and "Pull request"
 3. Click "Create GitHub App".
 4. Generate a private key for the GitHub App and download it.
