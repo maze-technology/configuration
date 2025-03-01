@@ -1,8 +1,8 @@
 # Define repositories
 
-resource "github_repository" "java-commons" {
-  name                    = "java-commons"
-  description             = "Java commons library repository"
+resource "github_repository" "commons" {
+  name                    = "commons"
+  description             = "Commons library repository"
   visibility              = "public"
   has_issues              = true
   has_wiki                = false
