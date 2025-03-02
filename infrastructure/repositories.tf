@@ -31,10 +31,9 @@ resource "github_repository" "repo" {
 
 resource "github_repository_file" "license" {
   for_each       = { for repo in var.repositories : repo.name => repo }
-  repository     = each.value.name
+  repository     = github_repository.repo[each.key].name
   file           = "LICENSE"
   content        = file("${path.module}/repositories-LICENSE")
   branch         = "main"
   commit_message = "Add LICENSE file"
-  depends_on     = [github_repository.repo[each.key]]
 }
