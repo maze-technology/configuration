@@ -1,5 +1,5 @@
 resource "github_repository" "repo" {
-  for_each                = { for repo in var.repositories : repo.name => repo }
+  for_each                = { for repo in local.computed_repositories : repo.name => repo }
   name                    = each.value.name
   description             = each.value.description
   visibility              = each.value.visibility
@@ -30,7 +30,7 @@ resource "github_repository" "repo" {
 }
 
 resource "github_repository_file" "license" {
-  for_each       = { for repo in var.repositories : repo.name => repo }
+  for_each       = { for repo in local.local.computed_repositories : repo.name => repo }
   repository     = github_repository.repo[each.key].name
   file           = "LICENSE"
   content        = file("${path.module}/repositories-LICENSE")

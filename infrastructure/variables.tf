@@ -18,8 +18,20 @@ variable "github_app_private_key_path" {
   type        = string
 }
 
+variable "repositories" {
+  description = "List of repository configurations. Leave empty to use defaults."
+  type = list(object({
+    name          = string
+    description   = string
+    visibility    = string
+    is_template   = bool
+    dynamic_pages = bool
+  }))
+  default = []
+}
+
 locals {
-  repositories = [
+  computed_repositories = concat(var.repositories, [
     {
       name          = ".github"
       description   = "Github repository"
@@ -48,17 +60,5 @@ locals {
       is_template   = true
       dynamic_pages = false
     }
-  ]
-}
-
-variable "repositories" {
-  type = list(object({
-    name          = string
-    description   = string
-    visibility    = string
-    is_template   = bool
-    dynamic_pages = bool
-  }))
-
-  default = local.repositories
+  ])
 }
