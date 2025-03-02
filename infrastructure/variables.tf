@@ -62,18 +62,37 @@ locals {
     }
   ])
 
-  repositories_files = concat(
-    tolist(fileset("${path.module}/repositories/files", "**")),
-    ["${path.root}/.editorconfig", "${path.root}/LICENSE"]
-  )
+  repository_files = fileset("${path.module}/repositories/files", "**")
+
+  root_files = [
+    {
+      source_file_path = "${path.root}/.editorconfig"
+      destination_path = ".editorconfig"
+    }
+  ]
 
   repository_file_combinations = flatten([
     for repo in local.computed_repositories : [
-      for file in local.repositories_files : {
-        key       = "${repo.name}/${file}"
-        repo_name = repo.name
-        file_path = file
+      for file in local.repository_files : {
+        key               = "${repo.name}/${file}"
+        repo_name         = repo.name
+        source_file_path  = "${path.module}/repositories/files/${file}"
+        destination_path  = file
       }
     ]
   ])
+
+  all_repository_files = concat(
+    local.repository_file_combinations,
+    flatten([
+      for repo in local.computed_repositories : [
+        for root_file in local.root_files : {
+          key               = "${repo.name}/${root_file.destination_path}"
+          repo_name         = repo.name
+          source_file_path  = root_file.source_file_path
+          destination_path  = root_file.destination_path
+        }
+      ]
+    ])
+  )
 }
