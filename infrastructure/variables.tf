@@ -63,7 +63,7 @@ locals {
   ])
 
   repositories_files = concat(
-    fileset("${path.module}/repositories/files", "**"),
+    tolist(fileset("${path.module}/repositories/files", "**")),
     ["${path.root}/.editorconfig", "${path.root}/LICENSE"]
   )
 
