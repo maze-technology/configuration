@@ -17,6 +17,13 @@ resource "github_repository" "github" {
   delete_branch_on_merge  = true
   auto_init               = false
   vulnerability_alerts    = true
+
+  pages {
+    source {
+      branch = "main"
+      path   = "/"
+    }
+  }
 }
 
 resource "github_repository" "commons" {
