@@ -66,7 +66,7 @@ locals {
 
   root_files = [
     {
-      source_file_path = "${path.root}/.editorconfig"
+      source_file_path = "../.editorconfig"
       destination_path = ".editorconfig"
     }
   ]
