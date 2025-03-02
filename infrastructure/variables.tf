@@ -18,15 +18,8 @@ variable "github_app_private_key_path" {
   type        = string
 }
 
-variable "repositories" {
-  type = list(object({
-    name          = string
-    description   = string
-    visibility    = string
-    is_template   = bool
-    dynamic_pages = bool
-  }))
-  default = [
+locals {
+  repositories = [
     {
       name          = ".github"
       description   = "Github repository"
@@ -35,8 +28,8 @@ variable "repositories" {
       dynamic_pages = false
     },
     {
-      name          = "docs"
-      description   = "Documentation repository"
+      name          = "${var.github_owner}.github.io"
+      description   = "Website repository"
       visibility    = "public"
       is_template   = false
       dynamic_pages = true
@@ -56,4 +49,16 @@ variable "repositories" {
       dynamic_pages = false
     }
   ]
+}
+
+variable "repositories" {
+  type = list(object({
+    name          = string
+    description   = string
+    visibility    = string
+    is_template   = bool
+    dynamic_pages = bool
+  }))
+
+  default = local.repositories
 }
