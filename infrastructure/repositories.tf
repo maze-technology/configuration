@@ -36,5 +36,5 @@ resource "github_repository_file" "license" {
   content        = file("${path.module}/repositories-LICENSE")
   branch         = "main"
   commit_message = "Add LICENSE file"
-  depends_on     = [for repo in github_repository.repo : repo]
+  depends_on     = [for repo_name in keys(var.repositories) : github_repository.repo[repo_name]]
 }
