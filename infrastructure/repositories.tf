@@ -29,11 +29,15 @@ resource "github_repository" "repo" {
   }
 }
 
-resource "github_repository_file" "license" {
-  for_each       = { for repo in local.computed_repositories : repo.name => repo }
-  repository     = github_repository.repo[each.key].name
-  file           = "LICENSE"
-  content        = file("${path.module}/repositories-LICENSE")
-  branch         = "main"
-  commit_message = "Add LICENSE file"
+resource "github_repository_file" "files" {
+  for_each = {
+    for item in local.repository_file_combinations :
+    item.key => item
+  }
+
+  repository      = github_repository.repo[each.value.repo_name].name
+  file            = each.value.file_path
+  content         = file("${path.module}/repositories/files/${each.value.file_path}")
+  branch          = "main"
+  commit_message  = "Add ${each.value.file_path}"
 }

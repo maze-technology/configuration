@@ -61,4 +61,16 @@ locals {
       dynamic_pages = false
     }
   ])
+
+  repositories_files = fileset("${path.module}/repositories/files", "**")
+
+  repository_file_combinations = flatten([
+    for repo in local.computed_repositories : [
+      for file in local.repositories_files : {
+        key       = "${repo.name}/${file}"
+        repo_name = repo.name
+        file_path = file
+      }
+    ]
+  ])
 }
