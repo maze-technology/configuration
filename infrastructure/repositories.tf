@@ -14,7 +14,7 @@ resource "github_repository" "repo" {
   allow_rebase_merge      = false
   allow_auto_merge        = false
   delete_branch_on_merge  = true
-  auto_init               = each.value.dynamic_pages
+  auto_init               = true # INFO: Mandatory for adding a license file later
   vulnerability_alerts    = true
 
   dynamic "pages" {
