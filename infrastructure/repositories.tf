@@ -34,7 +34,7 @@ resource "github_repository" "docs" {
   allow_rebase_merge      = false
   allow_auto_merge        = false
   delete_branch_on_merge  = true
-  auto_init               = false
+  auto_init               = true
   vulnerability_alerts    = true
 
   pages {
