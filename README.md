@@ -13,6 +13,7 @@ Configure all Maze Technologies GitHub repositories using OpenTofu
    - **Repository permissions**: Set the following permissions:
      - **Administration**: Read & write
      - **Contents**: Read & write
+     - **Packages**: Read & write
      - **Metadata**: Read-only
    - **Organization permissions**: Set the following permissions:
      - **Administration**: Read & write
