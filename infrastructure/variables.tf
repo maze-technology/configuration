@@ -62,7 +62,10 @@ locals {
     }
   ])
 
-  repositories_files = fileset("${path.module}/repositories/files", "**")
+  repositories_files = concat(
+    fileset("${path.module}/repositories/files", "**"),
+    ["${path.root}/.editorconfig", "${path.root}/LICENSE"]
+  )
 
   repository_file_combinations = flatten([
     for repo in local.computed_repositories : [
