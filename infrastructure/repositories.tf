@@ -14,7 +14,7 @@ resource "github_repository" "repo" {
   allow_rebase_merge      = false
   allow_auto_merge        = false
   delete_branch_on_merge  = true
-  auto_init               = false
+  auto_init               = each.value.dynamic_pages
   vulnerability_alerts    = true
 
   dynamic "pages" {
