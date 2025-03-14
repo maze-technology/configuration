@@ -71,16 +71,16 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
 resource "aws_iam_role" "github_actions_role" {
   name = "${local.formatted_default_tags_values}_GitHubActionsRole"
 
-  assume_role_policy      = templatefile("iam/github-actions-trust-policy.json", {
-    AWS_ACCOUNT_ID        = var.aws_account_id
-    GITHUB_USERNAME       = var.github_username
-    GITHUB_REPOSITORY     = var.github_repository
+  assume_role_policy = templatefile("iam/github-actions-trust-policy.json", {
+    AWS_ACCOUNT_ID    = var.aws_account_id
+    GITHUB_USERNAME   = var.github_username
+    GITHUB_REPOSITORY = var.github_repository
   })
 }
 
 resource "aws_iam_role_policy" "github_actions_policy" {
-  name   = "${local.formatted_default_tags_values}_GitHubRestrictedPolicy"
-  role   = aws_iam_role.github_actions_role.id
+  name = "${local.formatted_default_tags_values}_GitHubRestrictedPolicy"
+  role = aws_iam_role.github_actions_role.id
   policy = templatefile("iam/github-actions-policy.json", {
     S3_BUCKET_ARN           = aws_s3_bucket.github_opentofu_state.arn
     DYNAMODB_TABLE_ARN      = aws_dynamodb_table.github_opentofu_state_locks.arn
