@@ -10,10 +10,10 @@ updates:
     schedule:
       interval: 'daily'
     reviewers:
-      - 'maze-technology/dependabot-reviewers'
+      - 'opentofu-reviewers'
   - package-ecosystem: 'terraform'
     directory: '/infrastructure/'
     schedule:
       interval: 'daily'
     reviewers:
-      - 'maze-technology/dependabot-reviewers'
+      - 'opentofu-reviewers'
