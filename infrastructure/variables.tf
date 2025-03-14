@@ -64,33 +64,31 @@ locals {
 
   repository_files = fileset("${path.module}/repositories/files", "**")
 
-  root_files = [
+  other_files = [
     {
       source_file_path = "../.editorconfig"
       destination_path = ".editorconfig"
     }
   ]
 
-  repository_file_combinations = flatten([
-    for repo in local.computed_repositories : [
-      for file in local.repository_files : {
-        key               = "${repo.name}/${file}"
-        repo_name         = repo.name
-        source_file_path  = "${path.module}/repositories/files/${file}"
-        destination_path  = file
-      }
-    ]
-  ])
-
   all_repository_files = concat(
-    local.repository_file_combinations,
     flatten([
       for repo in local.computed_repositories : [
-        for root_file in local.root_files : {
-          key               = "${repo.name}/${root_file.destination_path}"
+        for file in local.repository_files : {
+          key               = "${repo.name}/${file}"
           repo_name         = repo.name
-          source_file_path  = root_file.source_file_path
-          destination_path  = root_file.destination_path
+          source_file_path  = "${path.module}/repositories/files/${file}"
+          destination_path  = file
+        }
+      ]
+    ]),
+    flatten([
+      for repo in local.computed_repositories : [
+        for other_file in local.other_files : {
+          key               = "${repo.name}/${other_file.destination_path}"
+          repo_name         = repo.name
+          source_file_path  = other_file.source_file_path
+          destination_path  = other_file.destination_path
         }
       ]
     ])
