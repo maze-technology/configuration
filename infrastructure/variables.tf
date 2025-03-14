@@ -68,6 +68,10 @@ locals {
     {
       source_file_path = "../.editorconfig"
       destination_path = ".editorconfig"
+    },
+    {
+      source_file_path = "../.prettierrc.json"
+      destination_path = ".prettierrc.json"
     }
   ]
 
