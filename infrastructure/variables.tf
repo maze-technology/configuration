@@ -32,6 +32,17 @@ variable "repositories" {
 }
 
 locals {
+  teams_config = {
+    "opentofu-engineers" = {
+      description = "OpenTofu engineers"
+      privacy     = "closed"
+    },
+    "java-engineers" = {
+      description = "Java engineers"
+      privacy     = "closed"
+    }
+  }
+
   computed_repositories = concat(var.repositories, [
     {
       name          = ".github"

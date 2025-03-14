@@ -1,11 +1,6 @@
-resource "github_team" "opentofu-engineers" {
-  name        = "opentofu-engineers"
-  description = "OpenTofu engineers"
-  privacy     = "closed"
-}
-
-resource "github_team" "java-engineers" {
-  name        = "java-engineers"
-  description = "Java engineers"
-  privacy     = "closed"
+resource "github_team" "teams" {
+  for_each    = local.teams_config
+  name        = each.key
+  description = each.value.description
+  privacy     = each.value.privacy
 }
