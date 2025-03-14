@@ -1,0 +1,38 @@
+name: OpenTofu Format Check
+
+on:
+  pull_request:
+    paths:
+      - "**.tf"
+
+env:
+  TOFU_VERSION: "1.9.0"
+
+jobs:
+  opentofu-fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+
+      - name: Run OpenTofu Format on bootstrap/
+        working-directory: bootstrap
+        run: tofu fmt -recursive
+
+      - name: Run OpenTofu Format on infrastructure/
+        working-directory: infrastructure
+        run: tofu fmt -recursive
+
+      - name: Commit and Push Fixes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Apply OpenTofu fmt fixes" || echo "No changes to commit"
+          git push
