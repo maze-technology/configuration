@@ -1,11 +1,11 @@
-resource "github_team" "opentofu-reviewers" {
-  name        = "opentofu-reviewers"
-  description = "Reviewers of OpenTofu code"
+resource "github_team" "opentofu-engineers" {
+  name        = "opentofu-engineers"
+  description = "OpenTofu engineers"
   privacy     = "closed"
 }
 
-resource "github_team" "java-reviewers" {
-  name        = "java-reviewers"
-  description = "Reviewers of Java code"
+resource "github_team" "java-engineers" {
+  name        = "java-engineers"
+  description = "Java engineers"
   privacy     = "closed"
 }

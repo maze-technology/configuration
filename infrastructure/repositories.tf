@@ -1,5 +1,9 @@
 resource "github_repository" "repo" {
-  for_each               = { for repo in local.computed_repositories : repo.name => repo }
+  for_each = {
+    for repo in local.computed_repositories :
+    repo.name => repo
+  }
+
   name                   = each.value.name
   description            = each.value.description
   visibility             = each.value.visibility

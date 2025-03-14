@@ -26,6 +26,7 @@ variable "repositories" {
     visibility    = string
     is_template   = bool
     dynamic_pages = bool
+    push_teams = list(string)
   }))
   default = []
 }
@@ -38,6 +39,7 @@ locals {
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
+      push_teams = ["opentofu-engineers"]
     },
     {
       name          = "${var.github_owner}.github.io"
@@ -45,6 +47,7 @@ locals {
       visibility    = "public"
       is_template   = false
       dynamic_pages = true
+      push_teams = []
     },
     {
       name          = "commons"
@@ -52,6 +55,7 @@ locals {
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
+      push_teams = ["java-engineers"]
     },
     {
       name          = "java-service-template"
@@ -59,7 +63,17 @@ locals {
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
+      push_teams = ["java-engineers"]
     }
+  ])
+
+  repo_push_team_pairs = flatten([
+    for repo in local.computed_repositories : [
+      for team in repo.push_teams : {
+        repo_name = repo.name
+        team_name = team
+      }
+    ]
   ])
 
   repository_files = fileset("${path.module}/repositories/files", "**")
