@@ -71,7 +71,7 @@ locals {
     }
   ]
 
-  all_repository_files = concat(
+  all_repositories_files = concat(
     flatten([
       for repo in local.computed_repositories : [
         for file in local.repository_files : {
