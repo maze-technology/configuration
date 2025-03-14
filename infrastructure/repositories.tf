@@ -31,7 +31,7 @@ resource "github_repository" "repo" {
 
 resource "github_repository_file" "files" {
   for_each = {
-    for item in local.all_repository_files :
+    for item in local.all_repositories_files :
     item.key => item
   }
 
