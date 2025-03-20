@@ -27,7 +27,7 @@ variable "repositories" {
     is_template                     = bool
     dynamic_pages                   = bool
     push_teams                      = list(string)
-    branch_protection_pattern       = string
+    protected_branches              = list(string)
     required_status_checks_contexts = list(string)
   }))
   default = []
@@ -61,7 +61,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["opentofu-engineers"]
-      branch_protection_pattern       = "main"
+      protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -71,7 +71,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = true
       push_teams                      = []
-      branch_protection_pattern       = "main"
+      protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -81,7 +81,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["java-engineers"]
-      branch_protection_pattern       = "main"
+      protected_branches              = ["main"]
       required_status_checks_contexts = ["build"]
     },
     {
@@ -91,7 +91,7 @@ locals {
       is_template                     = true
       dynamic_pages                   = false
       push_teams                      = ["java-engineers"]
-      branch_protection_pattern       = "main"
+      protected_branches              = ["main"]
       required_status_checks_contexts = ["build"]
     }
   ])
