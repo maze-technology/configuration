@@ -29,6 +29,6 @@ resource "github_branch_protection_v3" "protections" {
   restrictions {
     users = []
     teams = []
-    apps  = []
+    apps  = ["maze-workflows"]
   }
 }
