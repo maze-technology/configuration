@@ -3,16 +3,16 @@ resource "github_branch_protection" "protections" {
     for item in flatten([
       for repo in local.computed_repositories : [
         for branch in repo.protected_branches : {
-          repository_id                     = repo.id
-          pattern                           = branch
-          required_status_checks_contexts   = repo.required_status_checks_contexts
+          repository_id                   = repo.id
+          pattern                         = branch
+          required_status_checks_contexts = repo.required_status_checks_contexts
         }
       ]
     ]) : "${item.repository_id}:${item.pattern}" => item
   }
 
-  repository_id = each.value.repository_id
-  pattern       = each.value.pattern
+  repository_id  = each.value.repository_id
+  pattern        = each.value.pattern
   enforce_admins = true
 
   required_status_checks {
