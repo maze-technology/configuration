@@ -27,6 +27,8 @@ variable "repositories" {
     is_template   = bool
     dynamic_pages = bool
     push_teams    = list(string)
+    branch_protection_pattern = string
+    required_status_checks_contexts = list(string)
   }))
   default = []
 }
@@ -34,11 +36,11 @@ variable "repositories" {
 locals {
   teams_config = {
     "opentofu-engineers" = {
-      description = "OpenTofu engineers"
+      description = "Maze OpenTofu engineers on Github"
       privacy     = "closed"
     },
     "java-engineers" = {
-      description = "Java engineers"
+      description = "Maze Java engineers on GitHub"
       privacy     = "closed"
     }
   }
@@ -51,6 +53,8 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams    = ["opentofu-engineers"]
+      branch_protection_pattern = "main"
+      required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
       name          = "${var.github_owner}.github.io"
@@ -59,6 +63,8 @@ locals {
       is_template   = false
       dynamic_pages = true
       push_teams    = []
+      branch_protection_pattern = "main"
+      required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
       name          = "commons"
@@ -67,6 +73,8 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams    = ["java-engineers"]
+      branch_protection_pattern = "main"
+      required_status_checks_contexts = ["build"]
     },
     {
       name          = "java-service-template"
@@ -75,6 +83,8 @@ locals {
       is_template   = true
       dynamic_pages = false
       push_teams    = ["java-engineers"]
+      branch_protection_pattern = "main"
+      required_status_checks_contexts = ["build"]
     }
   ])
 
