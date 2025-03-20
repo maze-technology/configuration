@@ -1,34 +1,28 @@
-resource "github_branch_protection_v3" "protections" {
+resource "github_branch_protection" "protections" {
   for_each = {
     for item in flatten([
       for repo in local.computed_repositories : [
         for branch in repo.protected_branches : {
-          name                            = repo.name
-          branch                          = branch
-          required_status_checks_contexts = repo.required_status_checks_contexts
+          repository_id                     = repo.id
+          pattern                           = branch
+          required_status_checks_contexts   = repo.required_status_checks_contexts
         }
       ]
-    ]) : "${item.name}:${item.branch}" => item
+    ]) : "${item.repository_id}:${item.pattern}" => item
   }
 
-  repository     = each.value.name
-  branch         = each.value.branch
+  repository_id = each.value.repository_id
+  pattern       = each.value.pattern
   enforce_admins = true
 
   required_status_checks {
-    strict = true
-    checks = each.value.required_status_checks_contexts
+    strict   = true
+    contexts = each.value.required_status_checks_contexts
   }
 
   required_pull_request_reviews {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = true
     required_approving_review_count = 1
-  }
-
-  restrictions {
-    users = []
-    teams = []
-    apps  = ["maze-workflows"]
   }
 }
