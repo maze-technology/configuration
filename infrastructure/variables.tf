@@ -21,13 +21,13 @@ variable "github_app_private_key_path" {
 variable "repositories" {
   description = "List of repository configurations. Leave empty to use defaults."
   type = list(object({
-    name          = string
-    description   = string
-    visibility    = string
-    is_template   = bool
-    dynamic_pages = bool
-    push_teams    = list(string)
-    branch_protection_pattern = string
+    name                            = string
+    description                     = string
+    visibility                      = string
+    is_template                     = bool
+    dynamic_pages                   = bool
+    push_teams                      = list(string)
+    branch_protection_pattern       = string
     required_status_checks_contexts = list(string)
   }))
   default = []
@@ -47,43 +47,43 @@ locals {
 
   computed_repositories = concat(var.repositories, [
     {
-      name          = ".github"
-      description   = "Github repository"
-      visibility    = "public"
-      is_template   = false
-      dynamic_pages = false
-      push_teams    = ["opentofu-engineers"]
-      branch_protection_pattern = "main"
+      name                            = ".github"
+      description                     = "Github repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["opentofu-engineers"]
+      branch_protection_pattern       = "main"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
-      name          = "${var.github_owner}.github.io"
-      description   = "Website repository"
-      visibility    = "public"
-      is_template   = false
-      dynamic_pages = true
-      push_teams    = []
-      branch_protection_pattern = "main"
+      name                            = "${var.github_owner}.github.io"
+      description                     = "Website repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = true
+      push_teams                      = []
+      branch_protection_pattern       = "main"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
-      name          = "commons"
-      description   = "Commons library repository"
-      visibility    = "public"
-      is_template   = false
-      dynamic_pages = false
-      push_teams    = ["java-engineers"]
-      branch_protection_pattern = "main"
+      name                            = "commons"
+      description                     = "Commons library repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["java-engineers"]
+      branch_protection_pattern       = "main"
       required_status_checks_contexts = ["build"]
     },
     {
-      name          = "java-service-template"
-      description   = "Java service base template repository"
-      visibility    = "public"
-      is_template   = true
-      dynamic_pages = false
-      push_teams    = ["java-engineers"]
-      branch_protection_pattern = "main"
+      name                            = "java-service-template"
+      description                     = "Java service base template repository"
+      visibility                      = "public"
+      is_template                     = true
+      dynamic_pages                   = false
+      push_teams                      = ["java-engineers"]
+      branch_protection_pattern       = "main"
       required_status_checks_contexts = ["build"]
     }
   ])
