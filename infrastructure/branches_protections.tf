@@ -14,6 +14,8 @@ resource "github_branch_protection" "protections" {
   repository_id  = each.value.repository_id
   pattern        = each.value.pattern
   enforce_admins = true
+  allows_force_pushes = false
+  allows_deletions = false
 
   required_status_checks {
     strict   = true
@@ -24,5 +26,13 @@ resource "github_branch_protection" "protections" {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = true
     required_approving_review_count = 1
+  }
+
+  restrict_pushes {
+    push_allowances = [
+      {
+        apps = ["maze-workflows"]
+      }
+    ]
   }
 }
