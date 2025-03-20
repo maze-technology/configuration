@@ -35,12 +35,20 @@ variable "repositories" {
 
 locals {
   teams_config = {
+    "github-ci-engineers" = {
+      description = "Maze GitHub CI engineers"
+      privacy     = "closed"
+    },
+    "protobuf-engineers" = {
+      description = "Maze Protobuf engineers"
+      privacy     = "closed"
+    },
     "opentofu-engineers" = {
-      description = "Maze OpenTofu engineers on Github"
+      description = "Maze OpenTofu engineers"
       privacy     = "closed"
     },
     "java-engineers" = {
-      description = "Maze Java engineers on GitHub"
+      description = "Maze Java engineers"
       privacy     = "closed"
     }
   }
@@ -107,7 +115,11 @@ locals {
     {
       source_file_path = "../.prettierrc.json"
       destination_path = ".prettierrc.json"
-    }
+    },
+    {
+      source_file_path = "../.prettierignore"
+      destination_path = ".prettierignore"
+    },
   ]
 
   all_repositories_files = concat(

@@ -1,0 +1,11 @@
+# This is a comment
+# Each line is a file pattern followed by one or more owners
+
+# The team "github-ci-engineers" is responsible for everything in the ".github/" directory
+.github/ @github-ci-engineers
+
+# The team "opentofu-engineers" is responsible for everything in the "bootstrap/" directory
+/bootstrap/ @opentofu-engineers
+
+# The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
+/infrastructure/ @opentofu-engineers
