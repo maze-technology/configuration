@@ -30,9 +30,7 @@ resource "github_branch_protection" "protections" {
 
   restrict_pushes {
     push_allowances = [
-      {
-        apps = ["maze-workflows"]
-      }
+      "app:maze-workflows"
     ]
   }
 }
