@@ -18,12 +18,35 @@ env:
   S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
   DYNAMODB_TABLE_NAME: ${{ vars.DYNAMODB_TABLE_NAME }}
   KMS_KEY_ALIAS: ${{ vars.KMS_KEY_ALIAS }}
-  TOFU_VERSION: "1.9.0"
+  TOFU_VERSION: '1.9.0'
 
 jobs:
-  deploy-opentofu:
-    name: "Deploy OpenTofu Configuration"
+  opentofu-fmt-check:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+
+      - name: Check OpenTofu Format on bootstrap/
+        working-directory: bootstrap
+        run: |
+          tofu fmt -check -recursive
+
+      - name: Check OpenTofu Format on infrastructure/
+        working-directory: infrastructure
+        run: |
+          tofu fmt -check -recursive
+
+  deploy-opentofu:
+    name: 'Deploy OpenTofu Configuration'
+    runs-on: ubuntu-latest
+    needs: [opentofu-fmt-check]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

@@ -10,4 +10,8 @@ resource "github_repository_file" "files" {
   branch              = "main"
   commit_message      = "Add ${each.value.destination_path}"
   overwrite_on_create = true
+
+  depends_on = [
+    github_branch_protection.protections["${each.value.repo_name}:main"]
+  ]
 }
