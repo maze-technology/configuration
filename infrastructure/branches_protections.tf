@@ -26,11 +26,14 @@ resource "github_branch_protection" "protections" {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = true
     required_approving_review_count = 1
+    pull_request_bypassers = [
+      "A_kwHOBqM3sc4AEX57" # Maze Workflows app node id # TODO: Dynamize
+    ]
   }
 
   restrict_pushes {
     push_allowances = [
-      "A_kwHOBqM3sc4AEX57" # Maze Workflows app node id
+      "A_kwHOBqM3sc4AEX57" # Maze Workflows app node id # TODO: Dynamize
     ]
   }
 }
