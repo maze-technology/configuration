@@ -30,7 +30,7 @@ resource "github_branch_protection" "protections" {
 
   restrict_pushes {
     push_allowances = [
-      "1146491" # Maze Workflows app ID
+      "A_kwHOBqM3sc4AEX57" # Maze Workflows app node id
     ]
   }
 }
