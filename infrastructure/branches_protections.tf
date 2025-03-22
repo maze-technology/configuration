@@ -26,6 +26,6 @@ resource "github_branch_protection" "protections" {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = true
     required_approving_review_count = 1
-    pull_request_bypassers          = ["backnight"]
+    pull_request_bypassers = ["/backnight"]
   }
 }
