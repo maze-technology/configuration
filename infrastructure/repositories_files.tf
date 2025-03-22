@@ -8,8 +8,8 @@ resource "github_repository_file" "files" {
   file       = each.value.destination_path
   content    = file(each.value.source_file_path)
   branch = "feature/add-${replace(
-    replace(each.value.destination_path, "[/]", "-"),
-    "^[.]+", ""
+    replace(each.value.destination_path, "/", "-"),
+    ".", ""
   )}"
   commit_message      = "Add ${each.value.destination_path}"
   overwrite_on_create = true
