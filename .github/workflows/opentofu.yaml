@@ -120,6 +120,13 @@ jobs:
           jq '.' tfplan.json >> plan_output.md
           echo '```' >> plan_output.md
 
+          # Truncate the plan_output.md if it exceeds 65536 characters
+          if [ $(wc -c < plan_output.md) -gt 65536 ]; then
+            echo "Output is too long, truncating..." >> plan_output.md
+            head -c 65536 plan_output.md > plan_output_truncated.md
+            mv plan_output_truncated.md plan_output.md
+          fi
+
       - name: Post Plan Output as PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
