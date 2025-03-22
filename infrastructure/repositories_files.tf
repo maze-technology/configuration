@@ -7,8 +7,8 @@ resource "github_repository_file" "files" {
   repository          = github_repository.repo[each.value.repo_name].name
   file                = each.value.destination_path
   content             = file(each.value.source_file_path)
-  branch              = "feature/add-${regexreplace(
-    regexreplace(each.value.destination_path, "[/]", "-"),
+  branch              = "feature/add-${replace(
+    replace(each.value.destination_path, "[/]", "-"),
     "^[.]+", ""
   )}"
   commit_message      = "Add ${each.value.destination_path}"
