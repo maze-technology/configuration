@@ -1,3 +1,14 @@
+locals {
+  repo_push_team_pairs = flatten([
+    for repo in local.computed_repositories : [
+      for team in repo.push_teams : {
+        repo_name = repo.name
+        team_name = team
+      }
+    ]
+  ])
+}
+
 resource "github_team_repository" "push_teams" {
   for_each = {
     for pair in local.repo_push_team_pairs :
