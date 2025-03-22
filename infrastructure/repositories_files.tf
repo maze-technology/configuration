@@ -11,6 +11,7 @@ resource "github_repository_file" "files" {
     replace(each.value.destination_path, "/", "-"),
     ".", ""
   )}"
+  autocreate_branch = true
   commit_message      = "Add ${each.value.destination_path}"
   overwrite_on_create = true
 }
@@ -25,5 +26,5 @@ resource "github_repository_pull_request" "file-prs" {
   base_ref        = each.value.files_target_branch
   head_ref        = github_repository_file.files[each.key].branch
   title           = "Add ${each.value.destination_path}"
-  body            = "This PR adds the file ${each.value.destination_path}."
+  body            = "This PR adds the file ${each.value.destination_path}"
 }
