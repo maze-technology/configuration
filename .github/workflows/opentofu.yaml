@@ -71,10 +71,10 @@ jobs:
           echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
           chmod 600 private-key.pem
 
-      # - name: Install OpenTofu
-      #   uses: opentofu/setup-opentofu@v1
-      #   with:
-      #     tofu_version: ${{ env.TOFU_VERSION }}
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
 
       - name: Initialize OpenTofu with Backend
         working-directory: infrastructure
