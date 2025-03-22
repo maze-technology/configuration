@@ -4,11 +4,11 @@
 # The team "github-ci-engineers" is responsible for everything in the ".github/" directory
 .github/ @github-ci-engineers
 
+# The team "protobuf-engineers" is responsible for all .proto files
+*.proto @protobuf-engineers
+
 # The team "opentofu-engineers" is responsible for all .tf files
 *.tf @opentofu-engineers
 
-# The team "opentofu-engineers" is responsible for everything in the "bootstrap/" directory
-bootstrap/ @opentofu-engineers
-
-# The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
-infrastructure/ @opentofu-engineers
+# The team "java-engineers" is responsible for all .java files
+*.java @java-engineers

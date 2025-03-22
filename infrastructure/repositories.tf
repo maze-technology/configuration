@@ -1,3 +1,56 @@
+locals {
+  computed_repositories = concat(var.repositories, [
+    {
+      name                            = ".github"
+      description                     = "Github repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["opentofu-engineers"]
+      branches                        = []
+      protected_branches              = ["main"]
+      required_status_checks_contexts = [] // TODO: Add required status checks
+      files_target_branch             = "main"
+    },
+    {
+      name                            = "${var.github_owner}.github.io"
+      description                     = "Website repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = true
+      push_teams                      = []
+      branches                        = []
+      protected_branches              = ["main"]
+      required_status_checks_contexts = [] // TODO: Add required status checks
+      files_target_branch             = "main"
+    },
+    {
+      name                            = "commons"
+      description                     = "Commons library repository"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      required_status_checks_contexts = ["build"]
+      files_target_branch             = "develop"
+    },
+    {
+      name                            = "java-service-template"
+      description                     = "Java service base template repository"
+      visibility                      = "public"
+      is_template                     = true
+      dynamic_pages                   = false
+      push_teams                      = ["java-engineers"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      required_status_checks_contexts = ["build"]
+      files_target_branch             = "develop"
+    }
+  ])
+}
+
 resource "github_repository" "repo" {
   for_each = {
     for repo in local.computed_repositories :
