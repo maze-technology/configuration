@@ -5,8 +5,10 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   contents: write
@@ -22,11 +24,14 @@ env:
 
 jobs:
   opentofu-fmt-check:
+    name: 'OpenTofu Format Check'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
@@ -50,6 +55,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
@@ -112,6 +119,13 @@ jobs:
           echo '```json' >> plan_output.md
           jq '.' tfplan.json >> plan_output.md
           echo '```' >> plan_output.md
+
+          # Truncate the plan_output.md if it exceeds 65536 characters
+          if [ $(wc -c < plan_output.md) -gt 65536 ]; then
+            echo "Output is too long, truncating..." >> plan_output.md
+            head -c 65536 plan_output.md > plan_output_truncated.md
+            mv plan_output_truncated.md plan_output.md
+          fi
 
       - name: Post Plan Output as PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
