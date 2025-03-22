@@ -27,8 +27,10 @@ variable "repositories" {
     is_template                     = bool
     dynamic_pages                   = bool
     push_teams                      = list(string)
+    branches                        = list(string)
     protected_branches              = list(string)
     required_status_checks_contexts = list(string)
+    files_target_branch             = string
   }))
   default = []
 }
@@ -61,8 +63,10 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["opentofu-engineers"]
+      branches                        = []
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
+      files_target_branch             = "main"
     },
     {
       name                            = "${var.github_owner}.github.io"
@@ -71,8 +75,10 @@ locals {
       is_template                     = false
       dynamic_pages                   = true
       push_teams                      = []
+      branches                        = []
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
+      files_target_branch             = "main"
     },
     {
       name                            = "commons"
@@ -81,8 +87,10 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["java-engineers"]
-      protected_branches              = ["main"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
+      files_target_branch             = "develop"
     },
     {
       name                            = "java-service-template"
@@ -91,8 +99,10 @@ locals {
       is_template                     = true
       dynamic_pages                   = false
       push_teams                      = ["java-engineers"]
-      protected_branches              = ["main"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
+      files_target_branch             = "develop"
     }
   ])
 
