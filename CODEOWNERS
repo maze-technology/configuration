@@ -5,7 +5,7 @@
 .github/ @github-ci-engineers
 
 # The team "opentofu-engineers" is responsible for everything in the "bootstrap/" directory
-/bootstrap/ @opentofu-engineers
+bootstrap/ @opentofu-engineers
 
 # The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
-/infrastructure/ @opentofu-engineers
+infrastructure/ @opentofu-engineers

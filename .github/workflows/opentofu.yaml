@@ -24,6 +24,7 @@ env:
 
 jobs:
   opentofu-fmt-check:
+    name: 'OpenTofu Format Check'
     runs-on: ubuntu-latest
 
     steps:
