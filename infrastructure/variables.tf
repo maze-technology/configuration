@@ -136,22 +136,22 @@ locals {
     flatten([
       for repo in local.computed_repositories : [
         for file in local.repository_files : {
-          key              = "${repo.name}/${file}"
-          repo_name        = repo.name
-          source_file_path = "${path.module}/repositories/files/${file}"
-          destination_path = file
-          files_target_branch  = repo.files_target_branch
+          key                 = "${repo.name}/${file}"
+          repo_name           = repo.name
+          source_file_path    = "${path.module}/repositories/files/${file}"
+          destination_path    = file
+          files_target_branch = repo.files_target_branch
         }
       ]
     ]),
     flatten([
       for repo in local.computed_repositories : [
         for other_file in local.other_files : {
-          key              = "${repo.name}/${other_file.destination_path}"
-          repo_name        = repo.name
-          source_file_path = other_file.source_file_path
-          destination_path = other_file.destination_path
-          files_target_branch  = repo.files_target_branch
+          key                 = "${repo.name}/${other_file.destination_path}"
+          repo_name           = repo.name
+          source_file_path    = other_file.source_file_path
+          destination_path    = other_file.destination_path
+          files_target_branch = repo.files_target_branch
         }
       ]
     ])
