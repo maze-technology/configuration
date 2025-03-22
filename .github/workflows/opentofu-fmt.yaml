@@ -29,6 +29,9 @@ jobs:
         working-directory: infrastructure
         run: tofu fmt -recursive
 
+      - name: Configure Git to use rebase for pull
+        run: git config pull.rebase true
+
       - name: Pull, Commit and Push Fixes
         run: |
           git pull origin ${{ github.head_ref }}
