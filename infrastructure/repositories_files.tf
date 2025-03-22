@@ -18,9 +18,9 @@ resource "github_pull_request" "file-prs" {
     item.key => item
   }
 
-  repository     = github_repository.repo[each.value.repo_name].name
-  base_branch    = item.files_target_branch
-  head_branch    = github_repository_file.files[each.key].branch
-  title          = "Add ${each.value.destination_path}"
-  body           = "This PR adds the file ${each.value.destination_path}."
+  repository  = github_repository.repo[each.value.repo_name].name
+  base_branch = item.files_target_branch
+  head_branch = github_repository_file.files[each.key].branch
+  title       = "Add ${each.value.destination_path}"
+  body        = "This PR adds the file ${each.value.destination_path}."
 }
