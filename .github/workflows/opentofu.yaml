@@ -53,8 +53,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [opentofu-fmt-check]
     steps:
-      # - name: Checkout Repository
-      #   uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
