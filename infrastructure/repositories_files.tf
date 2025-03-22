@@ -23,4 +23,9 @@ resource "github_repository_pull_request" "file-prs" {
   head_ref        = github_repository_file.files[each.key].branch
   title           = "Add ${each.value.destination_path}"
   body            = "This PR adds the file ${each.value.destination_path}."
+
+  depends_on = [
+    github_repository.repo[each.value.repo_name],
+    github_repository_file.files[each.key]
+  ]
 }

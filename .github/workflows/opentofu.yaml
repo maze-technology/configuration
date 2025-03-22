@@ -23,8 +23,8 @@ env:
   TOFU_VERSION: '1.9.0'
 
 jobs:
-  opentofu-fmt-check:
-    name: 'OpenTofu Format Check'
+  opentofu-fmt:
+    name: 'OpenTofu Format'
     runs-on: ubuntu-latest
 
     steps:
@@ -38,20 +38,29 @@ jobs:
         with:
           tofu_version: ${{ env.TOFU_VERSION }}
 
-      - name: Check OpenTofu Format on bootstrap/
+      - name: Run OpenTofu Format on bootstrap/
         working-directory: bootstrap
-        run: |
-          tofu fmt -check -recursive
+        run: tofu fmt -recursive
 
-      - name: Check OpenTofu Format on infrastructure/
+      - name: Run OpenTofu Format on infrastructure/
         working-directory: infrastructure
+        run: tofu fmt -recursive
+
+      - name: Configure Git to use rebase for pull
+        run: git config pull.rebase true
+
+      - name: Pull, Commit and Push Fixes
         run: |
-          tofu fmt -check -recursive
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Apply OpenTofu fmt fixes" || echo "No changes to commit"
+          git push
 
   deploy-opentofu:
     name: 'Deploy OpenTofu Configuration'
     runs-on: ubuntu-latest
-    needs: [opentofu-fmt-check]
+    needs: [opentofu-fmt]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
