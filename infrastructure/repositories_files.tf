@@ -11,7 +11,7 @@ resource "github_repository_file" "files" {
     replace(each.value.destination_path, "/", "-"),
     ".", ""
   )}"
-  autocreate_branch = true
+  autocreate_branch   = true
   commit_message      = "Add ${each.value.destination_path}"
   overwrite_on_create = true
 }
