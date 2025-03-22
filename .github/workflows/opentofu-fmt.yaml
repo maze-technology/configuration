@@ -29,11 +29,11 @@ jobs:
         working-directory: infrastructure
         run: tofu fmt -recursive
 
-      - name: Commit and Push Fixes
+      - name: Pull, Commit and Push Fixes
         run: |
+          git pull --rebase origin HEAD:${{ github.head_ref }}
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add .
           git commit -m "Apply OpenTofu fmt fixes" || echo "No changes to commit"
-          git pull --rebase origin HEAD:${{ github.head_ref }}
           git push origin HEAD:${{ github.head_ref }}
