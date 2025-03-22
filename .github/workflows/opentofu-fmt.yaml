@@ -35,4 +35,5 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add .
           git commit -m "Apply OpenTofu fmt fixes" || echo "No changes to commit"
+          git pull --rebase origin HEAD:${{ github.head_ref }}
           git push origin HEAD:${{ github.head_ref }}
