@@ -66,8 +66,9 @@ resource "github_repository" "repo" {
   allow_squash_merge     = true
   allow_rebase_merge     = false
   allow_auto_merge       = false
+  allow_update_branch    = true
   delete_branch_on_merge = true
-  auto_init              = true # INFO: Mandatory for adding a license file later
+  auto_init              = true # INFO: Mandatory for adding files later
   vulnerability_alerts   = true
 
   dynamic "pages" {
@@ -78,6 +79,16 @@ resource "github_repository" "repo" {
         branch = "main"
         path   = "/"
       }
+    }
+  }
+
+  dynamic "template" {
+    for_each = each.value.template != null ? [1] : []
+
+    content {
+      owner      = each.value.template.owner
+      repository = each.value.template.repository
+      include_all_branches = true
     }
   }
 }
