@@ -7,10 +7,9 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["opentofu-engineers"]
-      branches                        = ["main"]
+      branches                        = []
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
-      files_target_branch             = "main"
     },
     {
       name                            = "${var.github_owner}.github.io"
@@ -19,7 +18,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = true
       push_teams                      = []
-      branches                        = ["main"]
+      branches                        = []
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
@@ -30,7 +29,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
-      branches                        = ["main", "develop"]
+      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
     },
@@ -41,7 +40,7 @@ locals {
       is_template                     = true
       dynamic_pages                   = false
       push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
-      branches                        = ["main", "develop"]
+      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
     }
