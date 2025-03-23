@@ -24,7 +24,6 @@ locals {
           repo_name           = repo.name
           source_file_path    = "${path.module}/repositories/files/${file}"
           destination_path    = file
-          files_target_branch = repo.files_target_branch
         }
       ]
     ]),
@@ -35,7 +34,6 @@ locals {
           repo_name           = repo.name
           source_file_path    = other_file.source_file_path
           destination_path    = other_file.destination_path
-          files_target_branch = repo.files_target_branch
         }
       ]
     ])
