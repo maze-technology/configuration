@@ -30,7 +30,6 @@ variable "repositories" {
     branches                        = list(string)
     protected_branches              = list(string)
     required_status_checks_contexts = list(string)
-    files_target_branch             = string
   }))
   default = []
 }
