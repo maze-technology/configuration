@@ -1,0 +1,39 @@
+name: Ensure CODEOWNERS stays unchanged on main
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/CODEOWNERS' # Only trigger if this file is touched
+
+permissions:
+  contents: write # Needed to push changes to the PR branch
+
+jobs:
+  restore-codeowners:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed to access full history including base branch (main)
+          ref: ${{ github.head_ref }}
+
+      - name: Restore CODEOWNERS from main
+        run: |
+          # Fetch the main branch from the origin
+          git fetch origin main
+
+          # Restore the CODEOWNERS file from main
+          git checkout origin/main -- .github/CODEOWNERS
+
+          # Only commit if something actually changed
+          if ! git diff --quiet; then
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git commit -am "Restore CODEOWNERS from main"
+            git push
+          else
+            echo "CODEOWNERS is already correct. Nothing to commit."
+          fi

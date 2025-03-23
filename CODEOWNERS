@@ -2,13 +2,10 @@
 # Each line is a file pattern followed by one or more owners
 
 # The team "github-ci-engineers" is responsible for everything in the ".github/" directory
-.github/ @github-ci-engineers
-
-# The team "opentofu-engineers" is responsible for all .tf files
-*.tf @opentofu-engineers
+.github/ @maze-technology/github-ci-engineers
 
 # The team "opentofu-engineers" is responsible for everything in the "bootstrap/" directory
-bootstrap/ @opentofu-engineers
+bootstrap/ @maze-technology/opentofu-engineers
 
 # The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
-infrastructure/ @opentofu-engineers
+infrastructure/ @maze-technology/opentofu-engineers @maze-technology/release-engineers

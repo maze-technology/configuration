@@ -7,7 +7,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["opentofu-engineers"]
-      branches                        = []
+      branches                        = ["main"]
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
       files_target_branch             = "main"
@@ -19,10 +19,9 @@ locals {
       is_template                     = false
       dynamic_pages                   = true
       push_teams                      = []
-      branches                        = []
+      branches                        = ["main"]
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
-      files_target_branch             = "main"
     },
     {
       name                            = "commons"
@@ -31,10 +30,9 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
-      branches                        = ["develop"]
+      branches                        = ["main", "develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
-      files_target_branch             = "develop"
     },
     {
       name                            = "java-service-template"
@@ -42,11 +40,10 @@ locals {
       visibility                      = "public"
       is_template                     = true
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers"]
-      branches                        = ["develop"]
+      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
+      branches                        = ["main", "develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
-      files_target_branch             = "develop"
     }
   ])
 }

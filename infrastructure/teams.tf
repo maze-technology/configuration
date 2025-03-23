@@ -1,5 +1,9 @@
 locals {
   teams_config = {
+    "release-engineers" = {
+      description = "Maze release engineers"
+      privacy     = "closed"
+    },
     "github-ci-engineers" = {
       description = "Maze GitHub CI engineers"
       privacy     = "closed"
