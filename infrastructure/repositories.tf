@@ -97,8 +97,8 @@ resource "github_repository" "repo" {
     for_each = lookup(each.value, "template", null) == null ? [] : [lookup(each.value, "template", null)]
 
     content {
-      owner      = each.value.template.owner
-      repository = each.value.template.repository
+      owner                = each.value.template.owner
+      repository           = each.value.template.repository
       include_all_branches = true
     }
   }
