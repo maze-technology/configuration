@@ -7,6 +7,7 @@ locals {
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["release-engineers"]
+      branches                        = []
       protected_branches              = ["main"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
