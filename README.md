@@ -1,6 +1,6 @@
-# Maze Technologies GitHub Configuration
+# GitHub Configuration
 
-Configure all Maze Technologies GitHub repositories using OpenTofu
+Configure all GitHub repositories using OpenTofu
 
 ## Deployment Instructions
 
