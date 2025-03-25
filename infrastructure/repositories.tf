@@ -96,8 +96,8 @@ resource "github_repository" "repo" {
     for_each = each.value.template != null ? [1] : []
 
     content {
-      owner      = each.value.template.owner
-      repository = each.value.template.repository
+      owner                = each.value.template.owner
+      repository           = each.value.template.repository
       include_all_branches = true
     }
   }
