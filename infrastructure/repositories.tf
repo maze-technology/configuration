@@ -1,14 +1,24 @@
 locals {
   computed_repositories = concat(var.repositories, [
     {
+      name                            = "repositories-common-files"
+      description                     = "Common files shared between repositories"
+      visibility                      = "public"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["release-engineers"]
+      protected_branches              = ["main"]
+      required_status_checks_contexts = [] // TODO: Add required status checks
+    },
+    {
       name                            = ".github"
       description                     = "Github repository"
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["opentofu-engineers"]
-      branches                        = []
-      protected_branches              = ["main"]
+      push_teams                      = ["release-engineers"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -17,9 +27,9 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = true
-      push_teams                      = []
-      branches                        = []
-      protected_branches              = ["main"]
+      push_teams                      = ["release-engineers"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -28,7 +38,7 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
+      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
@@ -39,7 +49,7 @@ locals {
       visibility                      = "public"
       is_template                     = true
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers"]
+      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       required_status_checks_contexts = ["build"]
