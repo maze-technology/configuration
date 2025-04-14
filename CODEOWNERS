@@ -1,4 +1,3 @@
-# This is a comment
 # Each line is a file pattern followed by one or more owners
 
 # The team "github-ci-engineers" is responsible for everything in the ".github/" directory
@@ -8,4 +7,7 @@
 bootstrap/ @maze-technology/opentofu-engineers
 
 # The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
-infrastructure/ @maze-technology/opentofu-engineers @maze-technology/release-engineers
+infrastructure/ @maze-technology/opentofu-engineers
+
+# The team "release-engineers" supervises every new release
+* @maze-technology/release-engineers

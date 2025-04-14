@@ -1,19 +1,8 @@
 locals {
   computed_repositories = concat(var.repositories, [
     {
-      name                            = "repositories-common-files"
-      description                     = "Common files shared between repositories"
-      visibility                      = "public"
-      is_template                     = false
-      dynamic_pages                   = false
-      push_teams                      = ["release-engineers"]
-      branches                        = []
-      protected_branches              = ["main"]
-      required_status_checks_contexts = [] // TODO: Add required status checks
-    },
-    {
       name                            = ".github"
-      description                     = "Github repository"
+      description                     = "GitHub repository"
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
