@@ -13,4 +13,6 @@ resource "github_branch" "repositories_branches" {
   repository    = github_repository.repo[each.value.repo_name].name
   branch        = each.value.branch
   source_branch = "main"
+
+  depends_on = [github_repository.repo[each.value.name]]
 }
