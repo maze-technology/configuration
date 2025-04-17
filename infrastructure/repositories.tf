@@ -9,6 +9,7 @@ locals {
       push_teams                      = ["release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -20,6 +21,7 @@ locals {
       push_teams                      = ["release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
@@ -31,6 +33,7 @@ locals {
       push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
       required_status_checks_contexts = ["build"]
     },
     {
@@ -42,6 +45,7 @@ locals {
       push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
       required_status_checks_contexts = ["build"]
     }
   ])
@@ -91,4 +95,15 @@ resource "github_repository" "repo" {
       include_all_branches = true
     }
   }
+}
+
+resource "github_branch_default" "default_branch" {
+  for_each = {
+    for repo in local.computed_repositories :
+    repo.name => repo
+    if lookup(repo, "default_branch", null) != null
+  }
+
+  repository = each.value.name
+  branch     = each.value.default_branch
 }

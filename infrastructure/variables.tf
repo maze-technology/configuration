@@ -29,6 +29,7 @@ variable "repositories" {
     push_teams                      = list(string)
     branches                        = list(string)
     protected_branches              = list(string)
+    default_branch                  = optional(string)
     required_status_checks_contexts = list(string)
     template = optional(object({
       owner      = string
