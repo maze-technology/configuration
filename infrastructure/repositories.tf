@@ -104,6 +104,6 @@ resource "github_branch_default" "default_branch" {
     if lookup(repo, "default_branch", null) != null
   }
 
-  repository = each.value.name
+  repository = github_repository.repo[each.value.name].name
   branch     = each.value.default_branch
 }
