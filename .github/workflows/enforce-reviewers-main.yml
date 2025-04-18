@@ -37,7 +37,12 @@ jobs:
 
           # Add release-engineers team as reviewer
           gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-            -X POST -f "team_reviewers[]=release-engineers"
+            -X POST --input - <<EOF
+          {
+            "team_reviewers": ["release-engineers"]
+          }
+          EOF
+
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
