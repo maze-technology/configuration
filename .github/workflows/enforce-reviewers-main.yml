@@ -23,15 +23,6 @@ jobs:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
-      # GH CLI may not be updated to the latest version
-      - name: Upgrade gh CLI
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 || true
-          sudo apt-add-repository https://cli.github.com/packages -y
-          sudo apt update
-          sudo apt install gh -y
-          gh --version
-
       - name: Set reviewers
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
@@ -41,12 +32,12 @@ jobs:
           for reviewer in $reviewers; do
             if [[ "$reviewer" != "maze-technology/release-engineers" ]]; then
               gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-                -X DELETE --raw-json "{\"reviewers\": [\"$reviewer\"]}"
+                -X DELETE -f "reviewers[]=$reviewer"
             fi
           done
 
           gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-            -X POST --raw-json '{"team_reviewers": ["release-engineers"]}'
+            -X POST -f "team_reviewers[]=release-engineers"
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
