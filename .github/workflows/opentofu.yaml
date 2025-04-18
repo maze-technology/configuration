@@ -1,9 +1,7 @@
 name: OpenTofu CI/CD
 
 on:
-  push:
-    branches:
-      - main
+  push: {}
   pull_request:
     types:
       - opened
@@ -52,8 +50,8 @@ jobs:
           git commit -m "Apply OpenTofu fmt fixes" || echo "No changes to commit"
           git push
 
-  deploy-opentofu:
-    name: 'Deploy OpenTofu Configuration'
+  plan-opentofu:
+    name: 'Plan OpenTofu Configuration'
     runs-on: ubuntu-latest
     needs: [opentofu-fmt]
     steps:
@@ -99,11 +97,6 @@ jobs:
           -var="github_app_private_key_path=private-key.pem" \
           -out=tfplan
 
-      - name: Apply OpenTofu Changes (Only on Main)
-        working-directory: infrastructure
-        if: github.ref == 'refs/heads/main'
-        run: tofu apply -auto-approve tfplan
-
       - name: Generate OpenTofu Plan Output
         working-directory: infrastructure
         if: github.event_name == 'pull_request'
@@ -136,3 +129,52 @@ jobs:
         with:
           path: infrastructure/plan_output.md
         if: github.event_name == 'pull_request'
+
+  apply-opentofu:
+    name: 'Apply OpenTofu Configuration'
+    runs-on: ubuntu-latest
+    needs: [plan-opentofu]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
+          role-session-name: MazeGitHubActionsSession
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Write GitHub App Private Key to file
+        working-directory: infrastructure
+        run: |
+          echo "${{ secrets.GH_APP_PRIVATE_KEY }}" > private-key.pem
+          chmod 600 private-key.pem
+
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+
+      - name: Initialize OpenTofu with Backend
+        working-directory: infrastructure
+        run: |
+          tofu init \
+            -backend-config="bucket=${S3_BUCKET_NAME}" \
+            -backend-config="region=${AWS_REGION}" \
+            -backend-config="kms_key_id=${KMS_KEY_ALIAS}" \
+            -backend-config="dynamodb_table=${DYNAMODB_TABLE_NAME}"
+
+      - name: Apply OpenTofu Changes
+        working-directory: infrastructure
+        run: |
+          tofu plan \
+          -var="github_owner=${{ github.repository_owner }}" \
+          -var="github_app_id=${{ secrets.GH_APP_ID }}" \
+          -var="github_app_installation_id=${{ secrets.GH_APP_INSTALLATION_ID }}" \
+          -var="github_app_private_key_path=private-key.pem" \
+          -out=tfplan
+          tofu apply -auto-approve tfplan

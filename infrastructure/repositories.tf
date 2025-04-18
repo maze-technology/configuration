@@ -1,12 +1,24 @@
 locals {
   computed_repositories = concat(var.repositories, [
     {
+      name                            = "github-configuration"
+      description                     = "GitHub organization configuration repository"
+      visibility                      = "private"
+      is_template                     = false
+      dynamic_pages                   = false
+      push_teams                      = ["github-engineers", "release-engineers"]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = []
+    },
+    {
       name                            = ".github"
       description                     = "GitHub repository"
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["release-engineers"]
+      push_teams                      = ["github-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -30,7 +42,7 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
+      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -42,7 +54,7 @@ locals {
       visibility                      = "public"
       is_template                     = true
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-ci-engineers", "protobuf-engineers", "release-engineers"]
+      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"

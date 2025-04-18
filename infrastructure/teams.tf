@@ -8,8 +8,8 @@ locals {
       description = "Maze release engineers"
       privacy     = "closed"
     },
-    "github-ci-engineers" = {
-      description = "Maze GitHub CI engineers"
+    "github-engineers" = {
+      description = "Maze GitHub engineers"
       privacy     = "closed"
     },
     "protobuf-engineers" = {
