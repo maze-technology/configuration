@@ -27,15 +27,15 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
 
+          # Remove all existing reviewers
           reviewers=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER \
             --jq '.requested_reviewers[].login')
           for reviewer in $reviewers; do
-            if [[ "$reviewer" != "maze-technology/release-engineers" ]]; then
-              gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-                -X DELETE -f "reviewers[]=$reviewer"
-            fi
+            gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
+              -X DELETE -f "reviewers[]=$reviewer"
           done
 
+          # Add release-engineers team as reviewer
           gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
             -X POST -f "team_reviewers[]=release-engineers"
         env:
