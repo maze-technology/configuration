@@ -23,6 +23,15 @@ jobs:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
+      # GH CLI may not be updated to the latest version
+      - name: Upgrade gh CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 || true
+          sudo apt-add-repository https://cli.github.com/packages -y
+          sudo apt update
+          sudo apt install gh -y
+          gh --version
+
       - name: Set reviewers
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
@@ -45,19 +54,17 @@ jobs:
         run: |
           COMMENT_BODY="👋 Heads-up: This PR targets \`main\`. The workflow automatically enforced reviewers by assigning **@maze-technology/release-engineers** and removing others to follow the release policy.<!-- enforced-by-release-policy -->"
 
-          # Get comment ID if it exists
           COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            -H "Authorization: token $GH_TOKEN" \
             --jq '.[] | select(.body | contains("<!-- enforced-by-release-policy -->")) | .id')
 
           if [[ -n "$COMMENT_ID" ]]; then
             echo "Updating comment $COMMENT_ID..."
             gh api repos/${{ github.repository }}/issues/comments/$COMMENT_ID \
-              -X PATCH -F body="$COMMENT_BODY" -H "Authorization: token $GH_TOKEN"
+              -X PATCH -F body="$COMMENT_BODY"
           else
             echo "Creating new comment..."
             gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-              -X POST -F body="$COMMENT_BODY" -H "Authorization: token $GH_TOKEN"
+              -X POST -F body="$COMMENT_BODY"
           fi
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
