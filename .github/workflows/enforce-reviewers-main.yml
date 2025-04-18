@@ -27,20 +27,17 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
 
-          # Remove existing reviewers except the release team
           reviewers=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER \
-            -H "Authorization: token $GH_TOKEN" \
             --jq '.requested_reviewers[].login')
           for reviewer in $reviewers; do
             if [[ "$reviewer" != "maze-technology/release-engineers" ]]; then
               gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-                -X DELETE -f reviewers="[$reviewer]" -H "Authorization: token $GH_TOKEN"
+                -X DELETE --raw-json "{\"reviewers\": [\"$reviewer\"]}"
             fi
           done
 
-          # Add release-engineers team
           gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-            -X POST -f team_reviewers='["release-engineers"]' -H "Authorization: token $GH_TOKEN"
+            -X POST --raw-json '{"team_reviewers": ["release-engineers"]}'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
