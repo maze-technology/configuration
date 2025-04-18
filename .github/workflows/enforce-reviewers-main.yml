@@ -29,20 +29,20 @@ jobs:
 
           # Remove existing reviewers except the release team
           reviewers=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER \
-            -H "Authorization: token $GH_APP_TOKEN" \
+            -H "Authorization: token $GH_TOKEN" \
             --jq '.requested_reviewers[].login')
           for reviewer in $reviewers; do
             if [[ "$reviewer" != "maze-technology/release-engineers" ]]; then
               gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-                -X DELETE -f reviewers="[$reviewer]" -H "Authorization: token $GH_APP_TOKEN"
+                -X DELETE -f reviewers="[$reviewer]" -H "Authorization: token $GH_TOKEN"
             fi
           done
 
           # Add release-engineers team
           gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-            -X POST -f team_reviewers='["release-engineers"]' -H "Authorization: token $GH_APP_TOKEN"
+            -X POST -f team_reviewers='["release-engineers"]' -H "Authorization: token $GH_TOKEN"
         env:
-          GH_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Comment or update PR
         run: |
@@ -50,17 +50,17 @@ jobs:
 
           # Get comment ID if it exists
           COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            -H "Authorization: token $GH_APP_TOKEN" \
+            -H "Authorization: token $GH_TOKEN" \
             --jq '.[] | select(.body | contains("<!-- enforced-by-release-policy -->")) | .id')
 
           if [[ -n "$COMMENT_ID" ]]; then
             echo "Updating comment $COMMENT_ID..."
             gh api repos/${{ github.repository }}/issues/comments/$COMMENT_ID \
-              -X PATCH -F body="$COMMENT_BODY" -H "Authorization: token $GH_APP_TOKEN"
+              -X PATCH -F body="$COMMENT_BODY" -H "Authorization: token $GH_TOKEN"
           else
             echo "Creating new comment..."
             gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-              -X POST -F body="$COMMENT_BODY" -H "Authorization: token $GH_APP_TOKEN"
+              -X POST -F body="$COMMENT_BODY" -H "Authorization: token $GH_TOKEN"
           fi
         env:
-          GH_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
