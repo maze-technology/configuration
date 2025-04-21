@@ -1,10 +1,7 @@
 # Each line is a file pattern followed by one or more owners
 
-# The team "github-engineers" is responsible for everything in the ".github/" directory
+# By default, all files are owned by the opentofu team
+* @maze-technology/opentofu-engineers
+
+# Github engineers
 .github/ @maze-technology/github-engineers
-
-# The team "opentofu-engineers" is responsible for everything in the "bootstrap/" directory
-bootstrap/ @maze-technology/opentofu-engineers
-
-# The team "opentofu-engineers" is responsible for everything in the "infrastructure/" directory
-infrastructure/ @maze-technology/opentofu-engineers
