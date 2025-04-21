@@ -1,0 +1,53 @@
+name: Enforce Reviewers on Main Branch
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+    branches:
+      - main
+
+jobs:
+  enforce-reviewers-main:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Authenticate GitHub App via OIDC
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
+      - name: Set reviewers
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+
+          # Add release-engineers team as reviewer
+          gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
+            -X POST -f "team_reviewers[]=release-engineers"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Comment or update PR
+        run: |
+          COMMENT_BODY="👋 Heads-up: This PR targets \`main\`. The workflow automatically enforced reviewers by assigning **@maze-technology/release-engineers** to follow the release policy.<!-- enforced-by-release-policy -->"
+
+          COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq '.[] | select(.body | contains("<!-- enforced-by-release-policy -->")) | .id')
+
+          if [[ -n "$COMMENT_ID" ]]; then
+            echo "Updating comment $COMMENT_ID..."
+            gh api repos/${{ github.repository }}/issues/comments/$COMMENT_ID \
+              -X PATCH -F body="$COMMENT_BODY"
+          else
+            echo "Creating new comment..."
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+              -X POST -F body="$COMMENT_BODY"
+          fi
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
