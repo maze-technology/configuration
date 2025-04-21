@@ -3,14 +3,14 @@ locals {
     {
       name                            = "github-configuration"
       description                     = "GitHub organization configuration repository"
-      visibility                      = "private"
+      visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
       push_teams                      = ["github-engineers", "release-engineers"]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = []
+      required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
       name                            = ".github"

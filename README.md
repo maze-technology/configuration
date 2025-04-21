@@ -21,7 +21,7 @@ Configure all GitHub repositories using OpenTofu
      - **Administration**: Read & write
      - **Members**: Read & write
 3. Click "Create GitHub App".
-4. Generate a private key for the GitHub App and download it.
+4. Generate a private key for the GitHub App and download it (and store it somewhere safe).
 5. Note the **App ID** and **Installation ID** for later use.
 
 ### Step 3: Initialize the Bootstrap Folder
