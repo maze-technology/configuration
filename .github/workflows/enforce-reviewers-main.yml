@@ -23,16 +23,6 @@ jobs:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
-      - name: Remove all reviewers
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-
-          # Remove all reviewers
-          gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers \
-            -X DELETE -f "reviewers[]=@all" -f "team_reviewers[]=@all"
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-
       - name: Set reviewers
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
