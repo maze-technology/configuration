@@ -8,6 +8,6 @@ resource "github_repository_environment" "production" {
   repository  = github_repository.repo[each.value.name].name
 
   reviewers {
-    teams = ["release-engineers"]
+    teams = [github_team.teams["release-engineers"].id]
   }
 }
