@@ -16,6 +16,8 @@ resource "github_branch_protection" "protections" {
   enforce_admins      = true
   allows_force_pushes = false
   allows_deletions    = false
+  require_conversation_resolution = true
+  required_linear_history = each.value.pattern == "main"
 
   required_status_checks {
     strict   = true
@@ -27,5 +29,9 @@ resource "github_branch_protection" "protections" {
     require_code_owner_reviews      = each.value.pattern != "main"
     required_approving_review_count = 1
     pull_request_bypassers          = ["/backnight"] # TODO: To remove at some point ;)
+  }
+
+  restrict_pushes {
+    push_allowances = each.value.pattern == "main" ? ["@maze-technology/release-engineers"] : []
   }
 }
