@@ -1,4 +1,4 @@
-name: Enforce Reviewers on Main Branch
+name: Enforce Reviewers on Main Branch for new releases
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
       - main
 
 jobs:
-  request-production-approval:
+  request-release-approval:
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: release
     steps:
       - name: Mark environment approval
-        run: echo "This PR to main requires Production approval"
+        run: echo "This PR to main requires Release approval"
