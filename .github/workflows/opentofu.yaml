@@ -1,12 +1,14 @@
 name: OpenTofu CI/CD
 
 on:
-  push: {}
   pull_request:
     types:
       - opened
       - reopened
       - synchronize
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
