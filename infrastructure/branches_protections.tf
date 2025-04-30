@@ -11,13 +11,13 @@ resource "github_branch_protection" "protections" {
     ]) : "${item.repository_id}:${item.pattern}" => item
   }
 
-  repository_id       = each.value.repository_id
-  pattern             = each.value.pattern
-  enforce_admins      = true
-  allows_force_pushes = false
-  allows_deletions    = false
+  repository_id                   = each.value.repository_id
+  pattern                         = each.value.pattern
+  enforce_admins                  = true
+  allows_force_pushes             = false
+  allows_deletions                = false
   require_conversation_resolution = true
-  required_linear_history = each.value.pattern == "main"
+  required_linear_history         = each.value.pattern == "main"
 
   required_status_checks {
     strict   = true
