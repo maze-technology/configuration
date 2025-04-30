@@ -4,8 +4,8 @@ resource "github_repository_environment" "production" {
     repo.name => repo
   }
 
-  environment = "production"
-  repository  = github_repository.repo[each.value.name].name
+  environment         = "production"
+  repository          = github_repository.repo[each.value.name].name
   prevent_self_review = true
 
   reviewers {
