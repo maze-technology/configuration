@@ -4,8 +4,8 @@ resource "github_repository_environment" "release" {
     repo.name => repo
   }
 
-  environment = "release"
-  repository  = github_repository.repo[each.value.name].name
+  environment         = "release"
+  repository          = github_repository.repo[each.value.name].name
   prevent_self_review = true
 
   reviewers {
