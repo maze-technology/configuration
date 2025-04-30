@@ -6,6 +6,7 @@ resource "github_repository_environment" "production" {
 
   environment = "production"
   repository  = github_repository.repo[each.value.name].name
+  prevent_self_review = true
 
   reviewers {
     teams = [github_team.teams["release-engineers"].id]
