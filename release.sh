@@ -5,6 +5,9 @@ set -euo pipefail
 BASE_BRANCH="main"
 SOURCE_BRANCH="develop"
 
+# Store original branch
+ORIGINAL_BRANCH=$(git symbolic-ref --short HEAD)
+
 # Get repo info from git remote
 REPO_URL=$(git config --get remote.origin.url)
 
@@ -33,3 +36,6 @@ else
   git push origin $BASE_BRANCH
   echo "✅ Successfully fast-forwarded $BASE_BRANCH from $SOURCE_BRANCH"
 fi
+
+# Return to original branch
+git checkout $ORIGINAL_BRANCH
