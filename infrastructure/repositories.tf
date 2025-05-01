@@ -1,60 +1,79 @@
 locals {
   computed_repositories = concat(var.repositories, [
     {
-      name                            = "github-configuration"
-      description                     = "GitHub organization configuration repository"
-      visibility                      = "public"
-      is_template                     = false
-      dynamic_pages                   = false
-      push_teams                      = ["github-engineers", "opentofu-engineers", "release-engineers"]
+      name          = "github-configuration"
+      description   = "GitHub organization configuration repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["opentofu-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
-      name                            = ".github"
-      description                     = "GitHub repository"
-      visibility                      = "public"
-      is_template                     = false
-      dynamic_pages                   = false
-      push_teams                      = ["github-engineers", "release-engineers"]
+      name          = ".github"
+      description   = "GitHub repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
-      name                            = "${var.github_owner}.github.io"
-      description                     = "Website repository"
-      visibility                      = "public"
-      is_template                     = false
-      dynamic_pages                   = true
-      push_teams                      = ["release-engineers"]
+      name          = "${var.github_owner}.github.io"
+      description   = "Website repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = true
+      push_teams = [
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
-      name                            = "commons"
-      description                     = "Commons library repository"
-      visibility                      = "public"
-      is_template                     = false
-      dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
+      name          = "commons"
+      description   = "Commons library repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["java-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build"]
     },
     {
-      name                            = "java-service-template"
-      description                     = "Java service base template repository"
-      visibility                      = "public"
-      is_template                     = true
-      dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
+      name          = "java-service-template"
+      description   = "Java service base template repository"
+      visibility    = "public"
+      is_template   = true
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["java-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
