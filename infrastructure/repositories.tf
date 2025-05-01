@@ -6,7 +6,11 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["github-engineers", "opentofu-engineers", "release-engineers"]
+      push_teams                      = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["opentofu-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -18,7 +22,10 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["github-engineers", "release-engineers"]
+      push_teams                      = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -30,7 +37,9 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = true
-      push_teams                      = ["release-engineers"]
+      push_teams                      = [
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -42,7 +51,12 @@ locals {
       visibility                      = "public"
       is_template                     = false
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
+      push_teams                      = [
+        github_team.teams["java-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
@@ -54,7 +68,12 @@ locals {
       visibility                      = "public"
       is_template                     = true
       dynamic_pages                   = false
-      push_teams                      = ["java-engineers", "github-engineers", "protobuf-engineers", "release-engineers"]
+      push_teams                      = [
+        github_team.teams["java-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"

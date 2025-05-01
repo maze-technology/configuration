@@ -32,6 +32,6 @@ resource "github_branch_protection" "protections" {
   }
 
   restrict_pushes {
-    push_allowances = each.value.pattern == "main" ? ["@maze-technology/release-engineers"] : []
+    push_allowances = each.value.pattern == "main" ? [github_team.teams["release-engineers"].name] : []
   }
 }
