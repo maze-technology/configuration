@@ -11,6 +11,8 @@ resource "github_branch_protection" "protections" {
     ]) : "${item.repository_id}:${item.pattern}" => item
   }
 
+  depends_on = [github_branch.repositories_branches["${each.value.repository_id}-${each.value.pattern}"]]
+
   repository_id                   = each.value.repository_id
   pattern                         = each.value.pattern
   enforce_admins                  = true
