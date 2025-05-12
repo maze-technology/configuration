@@ -13,4 +13,8 @@ resource "github_branch" "repositories_branches" {
   repository    = github_repository.repo[each.value.repo_name].name
   branch        = each.value.branch
   source_branch = "main"
+
+  lifecycle {
+    prevent_destroy = true # We don't want to delete any branch and GitHub won’t let us delete a default branch anyway
+  }
 }
