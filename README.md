@@ -60,3 +60,13 @@ Configure all GitHub repositories using OpenTofu
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output in Step 3)
 
 3. You may need to import the Github configuration repository in the infrastructure/ state
+
+### Important Notes
+
+When destroying a repository, you'll need to manually remove the default branch from the OpenTofu state first. This is because the branch resource has a `prevent_destroy` lifecycle rule to protect default branches. You can remove it from the state using:
+
+```sh
+AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu state rm 'github_branch.repositories_branches["repository-name-branch-name"]'
+```
+
+Replace `repository-name-branch-name` with the actual resource name in your state.

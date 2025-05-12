@@ -15,6 +15,9 @@ resource "github_branch" "repositories_branches" {
   source_branch = "main"
 
   lifecycle {
-    prevent_destroy = true # We don't want to delete any branch and GitHub won’t let us delete a default branch anyway
+    prevent_destroy = anytrue([
+      for repo in local.computed_repositories :
+      repo.name == each.value.repo_name && repo.default_branch == each.value.branch
+    ]) # Only prevent destruction of default branches to match with GitHub rule
   }
 }
