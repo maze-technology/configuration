@@ -13,11 +13,4 @@ resource "github_branch" "repositories_branches" {
   repository    = github_repository.repo[each.value.repo_name].name
   branch        = each.value.branch
   source_branch = "main"
-
-  lifecycle {
-    prevent_destroy = anytrue([
-      for repo in local.computed_repositories :
-      repo.name == each.value.repo_name && repo.default_branch == each.value.branch
-    ]) # Only prevent destruction of default branches to match with GitHub rule
-  }
 }

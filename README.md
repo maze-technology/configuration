@@ -63,7 +63,7 @@ Configure all GitHub repositories using OpenTofu
 
 ### Important Notes
 
-When destroying a repository, you'll need to manually remove the default branch from the OpenTofu state first. This is because the branch resource has a `prevent_destroy` lifecycle rule to protect default branches. You can remove it from the state using:
+Due to GitHub's default branch protection policy and the lack of a lifecycle retain policy in Terraform/OpenTofu ([#27035](https://github.com/hashicorp/terraform/issues/27035)), you'll need to manually remove the default branch from the OpenTofu state before destroying a repository. You can remove it from the state using:
 
 ```sh
 AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu state rm 'github_branch.repositories_branches["repository-name-branch-name"]'
