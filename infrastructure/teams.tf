@@ -12,8 +12,8 @@ locals {
       description = "Maze GitHub engineers"
       privacy     = "closed"
     },
-    "protobuf-engineers" = {
-      description = "Maze Protobuf engineers"
+    "smithy-engineers" = {
+      description = "Maze Smithy engineers"
       privacy     = "closed"
     },
     "opentofu-engineers" = {

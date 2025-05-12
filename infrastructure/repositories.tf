@@ -54,7 +54,7 @@ locals {
       push_teams = [
         github_team.teams["java-engineers"].name,
         github_team.teams["github-engineers"].name,
-        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["smithy-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -63,31 +63,31 @@ locals {
       required_status_checks_contexts = ["build"]
     },
     {
-      name          = "dtos-template"
-      description   = "DTOs base template repository"
+      name          = "smithy-hello-world-dtos-template"
+      description   = "Smithy Hello World DTOs base template repository"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
       push_teams = [
         github_team.teams["github-engineers"].name,
-        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["smithy-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = [] // TODO: Add required status checks
+      required_status_checks_contexts = ["build_scan"]
     },
     {
-      name          = "java-service-template"
-      description   = "Java service base template repository"
+      name          = "java-hello-world-service-template"
+      description   = "Java Hello World Service base template repository"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
       push_teams = [
         github_team.teams["java-engineers"].name,
         github_team.teams["github-engineers"].name,
-        github_team.teams["protobuf-engineers"].name,
+        github_team.teams["smithy-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
