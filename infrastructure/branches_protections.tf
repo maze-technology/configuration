@@ -33,4 +33,6 @@ resource "github_branch_protection" "protections" {
   restrict_pushes {
     push_allowances = each.value.pattern == "main" ? [github_team.teams["release-engineers"].node_id] : []
   }
+
+  depends_on = [github_branch.repositories_branches] # INFO: This is a workaround to avoid Terraform/OpenTofu issue with required_status_checks_contexts blocking the branch creation
 }
