@@ -12,16 +12,20 @@ locals {
       description = "Maze GitHub engineers"
       privacy     = "closed"
     },
-    "smithy-engineers" = {
-      description = "Maze Smithy engineers"
+    "idl-engineers" = {
+      description = "Maze IDL (Interface Definition Language) engineers"
       privacy     = "closed"
     },
-    "opentofu-engineers" = {
-      description = "Maze OpenTofu engineers"
+    "infrastructure-engineers" = {
+      description = "Maze Infrastructure engineers"
       privacy     = "closed"
     },
     "java-engineers" = {
       description = "Maze Java engineers"
+      privacy     = "closed"
+    },
+    "python-engineers" = {
+      description = "Maze Python engineers"
       privacy     = "closed"
     }
   }
