@@ -8,7 +8,7 @@ locals {
       dynamic_pages = false
       push_teams = [
         github_team.teams["github-engineers"].name,
-        github_team.teams["opentofu-engineers"].name,
+        github_team.teams["infrastructure-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -46,6 +46,23 @@ locals {
       required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
+      name          = "smithy-protovalidate"
+      description   = "Smithy Protovalidate repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["python-engineers"].name,
+        github_team.teams["idl-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = []
+    },
+    {
       name          = "commons"
       description   = "Commons library repository"
       visibility    = "public"
@@ -54,7 +71,7 @@ locals {
       push_teams = [
         github_team.teams["java-engineers"].name,
         github_team.teams["github-engineers"].name,
-        github_team.teams["smithy-engineers"].name,
+        github_team.teams["idl-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -70,7 +87,7 @@ locals {
       dynamic_pages = false
       push_teams = [
         github_team.teams["github-engineers"].name,
-        github_team.teams["smithy-engineers"].name,
+        github_team.teams["idl-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -87,7 +104,6 @@ locals {
       push_teams = [
         github_team.teams["java-engineers"].name,
         github_team.teams["github-engineers"].name,
-        github_team.teams["smithy-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
