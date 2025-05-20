@@ -80,6 +80,23 @@ locals {
       required_status_checks_contexts = ["build"]
     },
     {
+      name          = "smithy-events-codegen"
+      description   = "Smithy events codegen repository"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["java-engineers"].name,
+        github_team.teams["idl-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = []
+    },
+    {
       name          = "smithy-hello-world-dtos-template"
       description   = "Smithy Hello World DTOs base template repository"
       visibility    = "public"
