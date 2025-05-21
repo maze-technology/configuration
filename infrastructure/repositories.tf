@@ -188,8 +188,6 @@ resource "github_branch_default" "default_branch" {
   branch     = each.value.default_branch
 
   depends_on = [
-    null_resource.repositories_branches[
-      "${each.value.name}-${each.value.default_branch}"
-    ]
+    null_resource.repositories_branches
   ]
 }
