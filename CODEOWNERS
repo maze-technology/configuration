@@ -1,6 +1,6 @@
 # Each line is a file pattern followed by one or more owners
 
-# By default, all files are owned by the infrastructure-engineers team
+# By default, all files are owned by the Infrastructure engineers team
 * @maze-technology/infrastructure-engineers
 
 # Github engineers

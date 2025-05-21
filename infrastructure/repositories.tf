@@ -77,7 +77,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["build"]
+      required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
     },
     {
       name          = "smithy-events-codegen"
@@ -97,8 +97,8 @@ locals {
       required_status_checks_contexts = []
     },
     {
-      name          = "smithy-hello-world-dtos-template"
-      description   = "Smithy Hello World DTOs base template repository"
+      name          = "hello-world-idl-template"
+      description   = "Hello World IDL base template repository"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
@@ -126,7 +126,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["build"]
+      required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
     }
   ])
 }
