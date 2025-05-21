@@ -186,4 +186,8 @@ resource "github_branch_default" "default_branch" {
 
   repository = github_repository.repo[each.value.name].name
   branch     = each.value.default_branch
+
+  depends_on = [
+    null_resource.repositories_branches
+  ]
 }
