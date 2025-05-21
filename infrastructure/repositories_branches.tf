@@ -31,15 +31,17 @@ resource "null_resource" "repositories_branches" {
 
       echo "Ensuring branch $branch exists in $repo"
 
-      sha=$(curl -s -H "Authorization: Bearer $token" \
-                  "https://api.github.com/repos/${var.github_owner}/$repo/git/ref/heads/main" |
-            jq -r .object.sha)
+      # Get the SHA of the main branch
+      sha=$(gh api "repos/${var.github_owner}/$repo/git/ref/heads/main" \
+        --header "Authorization: Bearer $token" \
+        --jq .object.sha)
 
-      curl -fsSL -X POST \
-        -H "Authorization: Bearer $token" \
-        -H "Accept: application/vnd.github+json" \
-        "https://api.github.com/repos/${var.github_owner}/$repo/git/refs" \
-        -d "{\"ref\":\"refs/heads/$branch\",\"sha\":\"$sha\"}" \
+      # Create the new branch
+      gh api "repos/${var.github_owner}/$repo/git/refs" \
+        -X POST \
+        --header "Authorization: Bearer $token" \
+        -f ref="refs/heads/$branch" \
+        -f sha="$sha" \
         || echo "Branch $branch already exists in $repo"
     EOT
   }
