@@ -3,7 +3,7 @@ data "http" "installation_token" {
   method = "POST"
 
   request_headers = {
-    Authorization = "Bearer ${data.external.github_jwt.result.stdout}"
+    Authorization = "Bearer ${data.external.github_jwt.result.jwt}"
     Accept        = "application/vnd.github+json"
   }
 }
