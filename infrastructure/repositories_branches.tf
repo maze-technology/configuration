@@ -31,15 +31,16 @@ resource "null_resource" "repositories_branches" {
 
       echo "Ensuring branch $branch exists in $repo"
 
+      # Set GH_TOKEN environment variable
+      export GH_TOKEN="$token"
+
       # Get the SHA of the main branch
       sha=$(gh api "repos/${var.github_owner}/$repo/git/ref/heads/main" \
-        --header "Authorization: Bearer $token" \
         --jq .object.sha)
 
       # Create the new branch
       gh api "repos/${var.github_owner}/$repo/git/refs" \
         -X POST \
-        --header "Authorization: Bearer $token" \
         -f ref="refs/heads/$branch" \
         -f sha="$sha" \
         || echo "Branch $branch already exists in $repo"
