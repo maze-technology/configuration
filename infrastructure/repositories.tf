@@ -186,4 +186,8 @@ resource "github_branch_default" "default_branch" {
 
   repository = github_repository.repo[each.value.name].name
   branch     = github_branch.repositories_branches["${each.value.name}-${each.value.default_branch}"].branch
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }

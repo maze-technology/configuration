@@ -13,4 +13,8 @@ resource "github_branch" "repositories_branches" {
   repository    = github_repository.repo[each.value.repo_name].name
   branch        = each.value.branch
   source_branch = "main"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
