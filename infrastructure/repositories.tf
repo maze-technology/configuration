@@ -187,15 +187,9 @@ resource "github_branch_default" "default_branch" {
   repository = github_repository.repo[each.value.name].name
   branch     = each.value.default_branch
 
-  # Ensure the branch-creation null_resource for this repo ran first
   depends_on = [
-    # If the branch was created by null_resource.repositories_branches
-    # (keyed "<repo>-<branch>") wait for it, otherwise fall back to the repo itself.
-    try(
-      null_resource.repositories_branches[
-        "${each.value.name}-${each.value.default_branch}"
-      ],
-      github_repository.repo[each.value.name]
-    )
+    null_resource.repositories_branches[
+      "${each.value.name}-${each.value.default_branch}"
+    ]
   ]
 }

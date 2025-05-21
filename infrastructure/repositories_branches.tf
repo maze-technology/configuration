@@ -1,6 +1,6 @@
-# We *do not* want OpenTofu to manage the develop branch
-# as a resource, otherwise a future `tofu destroy`
-# (or archive) would try to delete it and hit GitHub's
+# We *do not* want OpenTofu to manage branches
+# as resources, otherwise a future `tofu destroy`
+# (or archive) would try to delete them and hit GitHub's
 # "422 Cannot delete the default branch" error.
 #
 # Instead, this one-shot null_resource creates
