@@ -32,8 +32,10 @@ resource "null_resource" "repositories_branches" {
     interpreter = ["/usr/bin/env", "bash", "-c"]
   }
 
-  # Re-run only if the repo gets recreated (id changes)
+  # Re-run only if the repo gets recreated
   triggers = {
-    repo_id = github_repository.repo[each.key].id
+    repo_id = github_repository.repo[each.value.repo_name].id
   }
+
+  depends_on = [github_repository.repo]
 }
