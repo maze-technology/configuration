@@ -3,7 +3,6 @@ data "external" "github_jwt" {
     "bash",
     "${path.module}/scripts/make-jwt.sh",
     var.github_app_id,
-    var.github_app_installation_id,
     var.github_app_private_key_path
   ]
 }
