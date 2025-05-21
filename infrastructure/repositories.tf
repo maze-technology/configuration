@@ -11,7 +11,6 @@ locals {
         github_team.teams["infrastructure-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
@@ -26,7 +25,6 @@ locals {
         github_team.teams["github-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
@@ -40,7 +38,6 @@ locals {
       push_teams = [
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = [] // TODO: Add required status checks
@@ -57,7 +54,6 @@ locals {
         github_team.teams["github-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = []
@@ -74,7 +70,6 @@ locals {
         github_team.teams["idl-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
@@ -91,7 +86,6 @@ locals {
         github_team.teams["idl-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = []
@@ -107,7 +101,6 @@ locals {
         github_team.teams["idl-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build_scan"]
@@ -123,7 +116,6 @@ locals {
         github_team.teams["github-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
-      branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
@@ -185,9 +177,5 @@ resource "github_branch_default" "default_branch" {
   }
 
   repository = github_repository.repo[each.value.name].name
-  branch     = github_branch.repositories_branches["${each.value.name}-${each.value.default_branch}"].branch
-
-  lifecycle {
-    prevent_destroy = true
-  }
+  branch     = each.value.default_branch
 }
