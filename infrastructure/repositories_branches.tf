@@ -20,30 +20,31 @@ resource "null_resource" "repositories_branches" {
     ]) : "${branch_obj.repo_name}-${branch_obj.branch}" => branch_obj
   }
 
-  # Use the GitHub App authentication to create branches from main's HEAD
   provisioner "local-exec" {
-    command     = <<-EOT
-      set -euo pipefail
-      # Generate a token using the GitHub App credentials
-      token=$(curl -s -X POST \
-        -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: Bearer $(echo '${base64encode(file(var.github_app_private_key_path))}' | base64 -d | openssl dgst -sha256 -sign <(echo '${base64encode(file(var.github_app_private_key_path))}' | base64 -d) | base64 -w 0)" \
-        "https://api.github.com/app/installations/${var.github_app_installation_id}/access_tokens" | jq -r .token)
-
-      # Use the generated token to create the branch
-      sha=$(curl -s -H "Authorization: Bearer $token" \
-        "https://api.github.com/repos/${var.github_owner}/${each.value.repo_name}/git/ref/heads/main" | jq -r .object.sha)
-
-      curl -s -X POST \
-        -H "Authorization: Bearer $token" \
-        -H "Accept: application/vnd.github.v3+json" \
-        "https://api.github.com/repos/${var.github_owner}/${each.value.repo_name}/git/refs" \
-        -d "{\"ref\":\"refs/heads/${each.value.branch}\",\"sha\":\"$sha\"}"
-    EOT
     interpreter = ["/usr/bin/env", "bash", "-c"]
+
+    command = <<-EOT
+      set -euo pipefail
+      token='${local.installation_token}'
+      repo='${each.value.repo_name}'
+      branch='${each.value.branch}'
+
+      echo "Ensuring branch $branch exists in $repo"
+
+      sha=$(curl -s -H "Authorization: Bearer $token" \
+                  "https://api.github.com/repos/${var.github_owner}/$repo/git/ref/heads/main" |
+            jq -r .object.sha)
+
+      curl -fsSL -X POST \
+        -H "Authorization: Bearer $token" \
+        -H "Accept: application/vnd.github+json" \
+        "https://api.github.com/repos/${var.github_owner}/$repo/git/refs" \
+        -d "{\"ref\":\"refs/heads/$branch\",\"sha\":\"$sha\"}" \
+        || echo "Branch $branch already exists in $repo"
+    EOT
   }
 
-  # Re-run only if the repo gets recreated
+  # Re-runs whenever the repo resource is re-created
   triggers = {
     repo_id = github_repository.repo[each.value.repo_name].id
   }
