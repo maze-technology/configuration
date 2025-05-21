@@ -23,7 +23,7 @@ resource "null_resource" "repositories_branches" {
   # Use the GitHub CLI (or curl) to create branches from main’s HEAD.
   # Assumes you have a GH_TOKEN with repo:write in the env OpenTofu runs in.
   provisioner "local-exec" {
-    command = <<-EOT
+    command     = <<-EOT
       set -euo pipefail
       sha=$(gh api repos/${var.github_owner}/${each.key}/git/ref/heads/main --jq .object.sha)
       gh api -X POST repos/${var.github_owner}/${each.key}/git/refs \
