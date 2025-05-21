@@ -33,4 +33,6 @@ resource "github_branch_protection" "protections" {
   restrict_pushes {
     push_allowances = each.value.pattern == "main" ? [github_team.teams["release-engineers"].node_id] : []
   }
+
+  depends_on = [github_branch_default.default_branch]
 }
