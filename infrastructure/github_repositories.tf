@@ -1,8 +1,8 @@
 locals {
   computed_repositories = concat(var.github_repositories, [
     {
-      name          = "github-configuration"
-      description   = "GitHub organization configuration"
+      name          = "configuration"
+      description   = "Repository managing the GitHub configuration and other public resources"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
