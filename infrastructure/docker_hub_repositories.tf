@@ -6,12 +6,13 @@ locals {
   []) // INFO: Empty list to be configured in the future
 }
 
-resource "docker_repository" "repositories" {
+resource "docker_hub_repository" "repositories" {
   for_each = {
     for repo in local.docker_hub_repositories :
     repo.name => repo
   }
 
+  namespace   = var.docker_username
   name        = each.value.name
   description = each.value.description
   private     = false
