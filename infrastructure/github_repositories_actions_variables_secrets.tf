@@ -20,8 +20,8 @@ locals {
 
 resource "github_actions_variable" "variables" {
   for_each = {
-    for repo in local.repositories_with_actions_variables :
-    repo.name => repo
+    for element in local.repositories_with_actions_variables :
+    "${element.repo.name}-${element.variable_name}" => element
   }
 
   repository    = each.value.repo.name
@@ -32,8 +32,8 @@ resource "github_actions_variable" "variables" {
 
 resource "github_actions_secret" "secrets" {
   for_each = {
-    for repo in local.repositories_with_actions_secrets :
-    repo.name => repo
+    for element in local.repositories_with_actions_secrets :
+    "${element.repo.name}-${element.secret_name}" => element
   }
 
   repository      = each.value.repo.name
