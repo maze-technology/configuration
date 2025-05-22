@@ -18,8 +18,19 @@ variable "github_app_private_key_path" {
   type        = string
 }
 
-variable "repositories" {
-  description = "List of repository configurations. Leave empty to use defaults."
+variable "docker_username" {
+  description = "Docker Hub username"
+  type        = string
+}
+
+variable "docker_password" {
+  description = "Docker Hub password"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_repositories" {
+  description = "List of GitHub repository configurations. Leave empty to use defaults."
   type = list(object({
     name                            = string
     description                     = string
@@ -34,6 +45,10 @@ variable "repositories" {
     template = optional(object({
       owner      = string
       repository = string
+    }))
+    docker_hub_repository = optional(object({
+      name        = string
+      description = string
     }))
   }))
   default = []

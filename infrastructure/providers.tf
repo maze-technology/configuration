@@ -7,3 +7,8 @@ provider "github" {
     pem_file        = file(var.github_app_private_key_path)
   }
 }
+
+provider "docker" {
+  username = var.docker_username
+  password = var.docker_password
+}

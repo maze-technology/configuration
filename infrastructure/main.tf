@@ -14,5 +14,10 @@ terraform {
       source  = "integrations/github"
       version = "~> 6.5"
     }
+
+    docker = {
+      source  = "docker/docker"
+      version = "~> 0.2"
+    }
   }
 }
