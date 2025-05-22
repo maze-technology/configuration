@@ -21,6 +21,7 @@ env:
   DYNAMODB_TABLE_NAME: ${{ vars.DYNAMODB_TABLE_NAME }}
   KMS_KEY_ALIAS: ${{ vars.KMS_KEY_ALIAS }}
   TOFU_VERSION: '1.9.0'
+  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
 
 jobs:
   plan-opentofu:
@@ -67,6 +68,8 @@ jobs:
           -var="github_app_id=${{ secrets.GH_APP_ID }}" \
           -var="github_app_installation_id=${{ secrets.GH_APP_INSTALLATION_ID }}" \
           -var="github_app_private_key_path=private-key.pem" \
+          -var="docker_username=${{ env.DOCKER_USERNAME }}" \
+          -var="docker_password=${{ secrets.DOCKER_PASSWORD }}" \
           -out=tfplan
 
       - name: Upload tfplan artifact

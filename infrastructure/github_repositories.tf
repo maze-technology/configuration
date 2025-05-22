@@ -1,8 +1,8 @@
 locals {
-  computed_repositories = concat(var.repositories, [
+  computed_repositories = concat(var.github_repositories, [
     {
       name          = "github-configuration"
-      description   = "GitHub organization configuration repository"
+      description   = "GitHub organization configuration"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -14,7 +14,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = [] // TODO: Add required status checks
+      required_status_checks_contexts = ["plan-opentofu"]
     },
     {
       name          = ".github"
@@ -33,7 +33,7 @@ locals {
     },
     {
       name          = "${var.github_owner}.github.io"
-      description   = "Website repository"
+      description   = "Documentation website"
       visibility    = "public"
       is_template   = false
       dynamic_pages = true
@@ -47,7 +47,7 @@ locals {
     },
     {
       name          = "smithy-protovalidate"
-      description   = "Smithy Protovalidate repository"
+      description   = "Smithy ProtoValidate"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -64,7 +64,7 @@ locals {
     },
     {
       name          = "commons"
-      description   = "Commons library repository"
+      description   = "Commons library"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -81,7 +81,7 @@ locals {
     },
     {
       name          = "smithy-events-codegen"
-      description   = "Smithy events codegen repository"
+      description   = "Smithy events codegen"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -98,7 +98,7 @@ locals {
     },
     {
       name          = "hello-world-idl-template"
-      description   = "Hello World IDL base template repository"
+      description   = "Hello World IDL base template"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
@@ -113,8 +113,8 @@ locals {
       required_status_checks_contexts = ["build_scan"]
     },
     {
-      name          = "java-hello-world-service-template"
-      description   = "Java Hello World Service base template repository"
+      name          = "java-hello-world-backend-template"
+      description   = "Java Hello World backend service base template"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
@@ -126,7 +126,11 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
+      required_status_checks_contexts = ["build_scan"]
+      docker_hub_repository = {
+        name        = "hello-world-backend"
+        description = "Hello World backend service"
+      }
     }
   ])
 }

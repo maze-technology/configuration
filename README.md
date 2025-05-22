@@ -51,6 +51,7 @@ Configure all GitHub repositories using OpenTofu
    - `GH_APP_ID` (GitHub App ID from Step 2)
    - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
    - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
+   - `DOCKER_PASSWORD` (Your Docker Hub password)
 
    **Variables:**
 
@@ -58,15 +59,6 @@ Configure all GitHub repositories using OpenTofu
    - `S3_BUCKET_NAME` (value from `s3_bucket_name` output in Step 3)
    - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output in Step 3)
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output in Step 3)
+   - `DOCKER_USERNAME` (Your Docker Hub username)
 
 3. You may need to import the Github configuration repository in the infrastructure/ state
-
-### Important Notes
-
-Due to GitHub's default branch protection policy and the lack of a lifecycle retain policy in Terraform/OpenTofu ([#27035](https://github.com/hashicorp/terraform/issues/27035)), you'll need to manually remove the default branch from the OpenTofu state before destroying a repository. You can remove it from the state using:
-
-```sh
-AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu state rm 'github_branch.repositories_branches["repository-name-branch-name"]'
-```
-
-Replace `repository-name-branch-name` with the actual resource name in your state.
