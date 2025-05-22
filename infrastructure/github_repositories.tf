@@ -127,7 +127,7 @@ locals {
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build_scan"]
-      docker_hub_repository           = {
+      docker_hub_repository = {
         name        = "hello-world-backend"
         description = "Hello World backend service"
       }
