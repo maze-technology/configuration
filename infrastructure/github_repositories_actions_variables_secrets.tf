@@ -1,12 +1,19 @@
 locals {
-  repositories_with_actions_variables = [
+  repositories_with_actions_variables = concat([
     for repo in local.computed_repositories :
     {
       repo           = repo
       variable_name  = "DOCKER_USERNAME"
       variable_value = var.docker_username
     } if lookup(repo, "docker_hub_repository", null) != null
-  ]
+  ],[
+    for repo in local.computed_repositories :
+    {
+      repo           = repo
+      variable_name  = "DOCKER_REPOSITORY"
+      variable_value = docker_hub_repository.repositories[repo.docker_hub_repository.name].id
+    } if lookup(repo, "docker_hub_repository", null) != null
+  ])
 
   repositories_with_actions_secrets = [
     for repo in local.computed_repositories :
