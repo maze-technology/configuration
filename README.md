@@ -1,6 +1,6 @@
-# GitHub Configuration
+# Configuration
 
-Configure all GitHub repositories using OpenTofu
+Configure GitHub organization and other public resources using OpenTofu
 
 ## Deployment Instructions
 
@@ -17,6 +17,8 @@ Configure all GitHub repositories using OpenTofu
      - **Contents**: Read & write
      - **Metadata**: Read-only
      - **Pull requests**: Read & write
+     - **Secrets**: Read & write
+     - **Variables**: Read & write
    - **Organization permissions**: Set the following permissions:
      - **Administration**: Read & write
      - **Members**: Read & write
@@ -36,7 +38,11 @@ Configure all GitHub repositories using OpenTofu
    ```
 3. Run the following command to apply the OpenTofu scripts, replace the values with yours:
    ```sh
-   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu apply -var="aws_account_id=YOUR_COMPANY_AWS_ACCOUNT_ID" -var="github_username=YOUR_COMPANY_GITHUB_USERNAME" -var="github_repository=YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY" -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
+   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu apply \
+   -var="aws_account_id=YOUR_COMPANY_AWS_ACCOUNT_ID" \
+   -var="github_username=YOUR_COMPANY_GITHUB_USERNAME" \
+   -var="github_repository=YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY" \
+   -var='default_tags={"CompanyIdentifier":"YOUR_COMPANY_IDENTIFIER"}'
    ```
 4. Note the output keys=values for later use
 
@@ -61,4 +67,13 @@ Configure all GitHub repositories using OpenTofu
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output in Step 3)
    - `DOCKER_USERNAME` (Your Docker Hub username)
 
-3. You may need to import the Github configuration repository in the infrastructure/ state
+3. You may need to import the Github configuration repository in the infrastructure/ state:
+   ```sh
+   AWS_REGION="YOUR_COMPANY_AWS_REGION" AWS_PROFILE="YOUR_COMPANY_AWS_PROFILE" tofu import \
+   -var="github_owner=YOUR_COMPANY_GITHUB_USERNAME" \
+   -var="github_app_id=YOUR_COMPANY_GITHUB_APP_ID" \
+   -var="github_app_installation_id=YOUR_COMPANY_GITHUB_APP_INSTALLATION_ID" \
+   -var="github_app_private_key_path=YOUR_COMPANY_GITHUB_APP_PRIVATE_KEY_PATH" \
+   -var="docker_username=YOUR_COMPANY_DOCKER_USERNAME" \
+   -var="docker_password=YOUR_COMPANY_DOCKER_PASSWORD" 'github_repository.repo["configuration"]' YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY
+   ```
