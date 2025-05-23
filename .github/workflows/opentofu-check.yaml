@@ -1,14 +1,11 @@
 name: OpenTofu Check
 
-# This workflow runs when a pull request is opened, updated, or reopened,
-# excluding pushes to the 'main' branch directly.
 on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches-ignore:
       - main
 
-# We only need read access to the contents for this job.
 permissions:
   contents: read
 
@@ -16,24 +13,20 @@ env:
   TOFU_VERSION: '1.9.0'
 
 jobs:
-  check-fmt:
+  check-fmt-opentofu:
     name: 'Check OpenTofu Format'
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the PR branch code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      # Install OpenTofu CLI at the specified version
       - name: Install OpenTofu
         uses: opentofu/setup-opentofu@v1
         with:
           tofu_version: ${{ env.TOFU_VERSION }}
 
-      # Run tofu fmt in check mode, recursively on all .tf files
-      # If any files are incorrectly formatted, this step will fail
       - name: Check Format
         run: tofu fmt -check -recursive

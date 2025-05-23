@@ -14,7 +14,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["plan-opentofu"]
+      required_status_checks_contexts = ["check-fmt-opentofu", "plan-opentofu"]
     },
     {
       name          = ".github"

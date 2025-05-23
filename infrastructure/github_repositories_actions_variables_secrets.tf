@@ -6,7 +6,7 @@ locals {
       variable_name  = "DOCKER_USERNAME"
       variable_value = var.docker_username
     } if lookup(repo, "docker_hub_repository", null) != null
-  ],[
+    ], [
     for repo in local.computed_repositories :
     {
       repo           = repo
