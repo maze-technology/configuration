@@ -1,0 +1,57 @@
+name: OpenTofu Fix
+
+# This workflow is triggered automatically after the first one completes
+on:
+  workflow_run:
+    workflows: ['OpenTofu Check']
+    types:
+      - completed
+
+# We need write access to push changes back to the PR branch
+permissions:
+  contents: write
+
+env:
+  TOFU_VERSION: '1.9.0'
+
+jobs:
+  fix-format:
+    # Only run this job if the first workflow completed successfully
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the same branch that was used in the originating PR
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Use the branch of the PR from the triggering workflow
+          ref: ${{ github.event.workflow_run.head_branch }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Install OpenTofu CLI
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+
+      # Run the formatter to automatically fix formatting issues
+      - name: Run OpenTofu Format
+        run: tofu fmt -recursive
+
+      # Commit and push the changes back to the same PR branch
+      - name: Commit and Push Fixes
+        run: |
+          # Set the Git identity for the bot
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Stage all modified files
+          git add .
+
+          # Check if there are any changes to commit (diff not empty)
+          # This avoids unnecessary commits if nothing changed
+          git diff --quiet && git diff --staged --quiet || git commit -m "Apply OpenTofu fmt fixes"
+
+          # Push the changes back to the PR branch
+          git push
