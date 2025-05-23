@@ -1,6 +1,6 @@
 # Configuration
 
-Configure GitHub organization and other public resources using OpenTofu
+Manage GitHub configuration and other public resources using OpenTofu
 
 ## Deployment Instructions
 
