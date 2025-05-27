@@ -53,7 +53,7 @@ locals {
       dynamic_pages = false
       push_teams = [
         github_team.teams["python-engineers"].name,
-        github_team.teams["idl-engineers"].name,
+        github_team.teams["spec-engineers"].name,
         github_team.teams["github-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
@@ -71,7 +71,7 @@ locals {
       push_teams = [
         github_team.teams["java-engineers"].name,
         github_team.teams["github-engineers"].name,
-        github_team.teams["idl-engineers"].name,
+        github_team.teams["spec-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -88,7 +88,7 @@ locals {
       push_teams = [
         github_team.teams["github-engineers"].name,
         github_team.teams["java-engineers"].name,
-        github_team.teams["idl-engineers"].name,
+        github_team.teams["spec-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
@@ -97,14 +97,14 @@ locals {
       required_status_checks_contexts = []
     },
     {
-      name          = "hello-world-idl-template"
-      description   = "Hello World IDL base template"
+      name          = "hello-world-specs-template"
+      description   = "Hello World specs base template"
       visibility    = "public"
       is_template   = true
       dynamic_pages = false
       push_teams = [
         github_team.teams["github-engineers"].name,
-        github_team.teams["idl-engineers"].name,
+        github_team.teams["spec-engineers"].name,
         github_team.teams["release-engineers"].name
       ]
       branches                        = ["develop"]
