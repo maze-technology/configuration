@@ -10,13 +10,6 @@ locals {
     for repo in local.computed_repositories :
     {
       repo           = repo
-      variable_name  = "DOCKER_ORG_NAMESPACE"
-      variable_value = var.docker_org_namespace
-    } if lookup(repo, "docker_hub_repository", null) != null
-    ], [
-    for repo in local.computed_repositories :
-    {
-      repo           = repo
       variable_name  = "DOCKER_REPOSITORY"
       variable_value = docker_hub_repository.repositories[repo.docker_hub_repository.name].id
     } if lookup(repo, "docker_hub_repository", null) != null
