@@ -66,6 +66,7 @@ Manage GitHub configuration and other public resources using OpenTofu
    - `DYNAMODB_TABLE_NAME` (value from `dynamodb_table_name` output in Step 3)
    - `KMS_KEY_ALIAS` (value from `kms_key_alias` output in Step 3)
    - `DOCKER_USERNAME` (Your Docker Hub username)
+   - `DOCKER_ORG_NAMESPACE` (Your Docker Hub organization namespace)
 
 3. You may need to import the Github configuration repository in the infrastructure/ state:
    ```sh

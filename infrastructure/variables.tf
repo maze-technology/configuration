@@ -23,6 +23,11 @@ variable "docker_username" {
   type        = string
 }
 
+variable "docker_org_namespace" {
+  description = "Docker Hub organization namespace"
+  type        = string
+}
+
 variable "docker_password" {
   description = "Docker Hub password"
   type        = string
