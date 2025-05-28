@@ -12,7 +12,7 @@ resource "docker_hub_repository" "repositories" {
     repo.name => repo
   }
 
-  namespace   = var.docker_username
+  namespace   = var.docker_org_namespace
   name        = each.value.name
   description = each.value.description
   private     = false
