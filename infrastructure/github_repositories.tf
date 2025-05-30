@@ -77,7 +77,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["build"] # TODO: Rename to build_scan
+      required_status_checks_contexts = ["build_scan", "check-fmt-smithy"]
     },
     {
       name          = "smithy-events-codegen"
@@ -110,7 +110,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = ["build_scan"]
+      required_status_checks_contexts = ["build_scan", "check-fmt-smithy"]
     },
     {
       name          = "java-hello-world-backend-template"
