@@ -80,8 +80,8 @@ locals {
       required_status_checks_contexts = ["build_scan", "check-fmt-smithy"]
     },
     {
-      name          = "smithy-events-codegen"
-      description   = "Smithy events codegen"
+      name          = "smithy-eventstream-codegen"
+      description   = "Smithy eventstream codegen plugin"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
