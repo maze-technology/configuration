@@ -70,6 +70,7 @@ jobs:
           -var="docker_username=${{ env.DOCKER_USERNAME }}" \
           -var="docker_password=${{ secrets.DOCKER_PASSWORD }}" \
           -var="docker_org_namespace=${{ env.DOCKER_ORG_NAMESPACE }}" \
+          -var="sonar_token=${{ secrets.SONAR_TOKEN }}" \
           -out=tfplan
 
       - name: Upload tfplan artifact

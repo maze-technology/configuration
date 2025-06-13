@@ -2,6 +2,23 @@
 
 Manage GitHub configuration and other public resources using OpenTofu
 
+[![Continuous Integration (CI)](https://github.com/maze-technology/configuration/actions/workflows/opentofu.yaml/badge.svg?branch=main)](https://github.com/maze-technology/configuration/actions/workflows/opentofu.yaml)
+
+## Quality
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=coverage)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=bugs)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
+
 ## Deployment Instructions
 
 ### Step 1: Initialization
@@ -58,6 +75,7 @@ Manage GitHub configuration and other public resources using OpenTofu
    - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
    - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
    - `DOCKER_PASSWORD` (Your Docker Hub password)
+   - `SONAR_TOKEN` (Your SonarCloud API token)
 
    **Variables:**
 

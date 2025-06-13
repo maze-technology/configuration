@@ -34,6 +34,12 @@ variable "docker_password" {
   sensitive   = true
 }
 
+variable "sonar_token" {
+  description = "SonarCloud API token"
+  type        = string
+  sensitive   = true
+}
+
 variable "github_repositories" {
   description = "List of GitHub repository configurations. Leave empty to use defaults."
   type = list(object({
