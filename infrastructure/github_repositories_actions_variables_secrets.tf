@@ -15,14 +15,21 @@ locals {
     } if lookup(repo, "docker_hub_repository", null) != null
   ])
 
-  repositories_with_actions_secrets = [
+  repositories_with_actions_secrets = concat([
     for repo in local.computed_repositories :
     {
       repo         = repo
       secret_name  = "DOCKER_PASSWORD"
       secret_value = var.docker_password
     } if lookup(repo, "docker_hub_repository", null) != null
-  ]
+  ], [
+    for repo in local.computed_repositories :
+    {
+      repo         = repo
+      secret_name  = "SONAR_TOKEN"
+      secret_value = var.sonar_token
+    }
+  ])
 }
 
 resource "github_actions_variable" "variables" {

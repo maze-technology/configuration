@@ -58,6 +58,7 @@ Manage GitHub configuration and other public resources using OpenTofu
    - `GH_APP_INSTALLATION_ID` (GitHub App Installation ID from Step 2)
    - `GH_APP_PRIVATE_KEY` (Contents of the private key file downloaded in Step 2)
    - `DOCKER_PASSWORD` (Your Docker Hub password)
+   - `SONAR_TOKEN` (Your SonarCloud API token)
 
    **Variables:**
 
