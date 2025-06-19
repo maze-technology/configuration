@@ -41,6 +41,8 @@ resource "github_actions_variable" "variables" {
   repository    = each.value.repo.name
   variable_name = each.value.variable_name
   value         = each.value.variable_value
+
+  depends_on = [github_repository.repo]
 }
 
 
@@ -53,4 +55,6 @@ resource "github_actions_secret" "secrets" {
   repository      = each.value.repo.name
   secret_name     = each.value.secret_name
   plaintext_value = each.value.secret_value
+
+  depends_on = [github_repository.repo]
 }
