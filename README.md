@@ -8,12 +8,10 @@ Manage GitHub configuration and other public resources using OpenTofu
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
-
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
-
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=coverage)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=bugs)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=maze-technology_configuration&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=maze-technology_configuration)

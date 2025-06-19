@@ -80,6 +80,23 @@ locals {
       required_status_checks_contexts = ["build_scan", "check-fmt-smithy"]
     },
     {
+      name          = "spring-cloud-eventstream"
+      description   = "Spring Cloud EventStream library"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["java-engineers"].name,
+        github_team.teams["github-engineers"].name,
+        github_team.teams["spec-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = ["build_scan"]
+    },
+    {
       name          = "smithy-eventstream-codegen"
       description   = "Smithy eventstream codegen plugin"
       visibility    = "public"
