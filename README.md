@@ -92,5 +92,7 @@ Manage GitHub configuration and other public resources using OpenTofu
    -var="github_app_installation_id=YOUR_COMPANY_GITHUB_APP_INSTALLATION_ID" \
    -var="github_app_private_key_path=YOUR_COMPANY_GITHUB_APP_PRIVATE_KEY_PATH" \
    -var="docker_username=YOUR_COMPANY_DOCKER_USERNAME" \
-   -var="docker_password=YOUR_COMPANY_DOCKER_PASSWORD" 'github_repository.repo["configuration"]' YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY
+   -var="docker_password=YOUR_COMPANY_DOCKER_PASSWORD" \
+   -var="docker_org_namespace=YOUR COMPANY_DOCKER_ORG_NAMESPACE" \
+   -var="sonar_token=YOUR_SONAR_TOKEN" 'github_repository.repo["configuration"]' YOUR_COMPANY_GITHUB_CONFIGURATION_REPOSITORY
    ```
