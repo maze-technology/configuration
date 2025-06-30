@@ -22,7 +22,7 @@ locals {
       secret_name  = "DOCKER_PASSWORD"
       secret_value = var.docker_password
     } if lookup(repo, "docker_hub_repository", null) != null
-    ])
+  ])
 }
 
 resource "github_actions_variable" "variables" {
