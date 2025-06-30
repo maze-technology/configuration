@@ -53,6 +53,7 @@ variable "github_repositories" {
     protected_branches              = list(string)
     default_branch                  = optional(string)
     required_status_checks_contexts = list(string)
+    archived                        = optional(bool)
     template = optional(object({
       owner      = string
       repository = string

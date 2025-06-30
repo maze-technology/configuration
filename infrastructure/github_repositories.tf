@@ -80,8 +80,8 @@ locals {
       required_status_checks_contexts = ["build_scan", "check-fmt-smithy"]
     },
     {
-      name          = "spring-cloud-eventstream"
-      description   = "Spring Cloud EventStream library"
+      name          = "spring-eventstream"
+      description   = "Spring EventStream library"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -112,6 +112,7 @@ locals {
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = []
+      archived                        = true
     },
     {
       name          = "hello-world-specs-template"
@@ -175,6 +176,7 @@ resource "github_repository" "repo" {
   delete_branch_on_merge = true
   auto_init              = true # INFO: Mandatory for adding files later
   vulnerability_alerts   = true
+  archived               = lookup(each.value, "archived", false)
 
   dynamic "pages" {
     for_each = each.value.dynamic_pages ? [1] : []
