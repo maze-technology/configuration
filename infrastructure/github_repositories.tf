@@ -112,7 +112,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = []
+      required_status_checks_contexts = ["check-fmt-smithy"]
     },
     {
       name          = "smithy-temporal-codegen"
@@ -129,7 +129,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = []
+      required_status_checks_contexts = [] // TODO: Add required status checks
     },
     {
       name          = "hello-world-specs-template"
