@@ -95,10 +95,11 @@ locals {
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = ["build_scan"]
+      archived                        = true
     },
     {
-      name          = "smithy-eventstream-codegen"
-      description   = "Smithy eventstream codegen plugin"
+      name          = "smithy-temporal-traits"
+      description   = "Smithy Temporal traits"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
@@ -112,7 +113,23 @@ locals {
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
       required_status_checks_contexts = []
-      archived                        = true
+    },
+    {
+      name          = "smithy-temporal-codegen"
+      description   = "Smithy Temporal codegen plugin"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["java-engineers"].name,
+        github_team.teams["spec-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = []
     },
     {
       name          = "hello-world-specs-template"
