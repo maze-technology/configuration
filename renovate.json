@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "terraform": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["terraform"],
+      "matchPaths": ["bootstrap/**"],
+      "schedule": ["every weekday"],
+      "reviewers": ["maze-technology/infrastructure-engineers"],
+      "groupName": "Terraform Bootstrap Dependencies"
+    },
+    {
+      "matchManagers": ["terraform"],
+      "matchPaths": ["infrastructure/**"],
+      "schedule": ["every weekday"],
+      "reviewers": ["maze-technology/infrastructure-engineers"],
+      "groupName": "Terraform Infrastructure Dependencies"
+    }
+  ],
+  "dependencyDashboard": true,
+  "configMigration": true
+}
