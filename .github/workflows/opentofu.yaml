@@ -33,7 +33,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
           role-session-name: MazeGitHubActionsSession
@@ -119,7 +119,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
           role-session-name: MazeGitHubActionsSession
