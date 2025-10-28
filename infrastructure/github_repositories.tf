@@ -17,6 +17,22 @@ locals {
       required_status_checks_contexts = ["check-fmt-opentofu", "plan-opentofu"]
     },
     {
+      name          = "global-infrastructure"
+      description   = "Repository managing global infrastructure resources"
+      visibility    = "public"
+      is_template   = false
+      dynamic_pages = false
+      push_teams = [
+        github_team.teams["github-engineers"].name,
+        github_team.teams["infrastructure-engineers"].name,
+        github_team.teams["release-engineers"].name
+      ]
+      branches                        = ["develop"]
+      protected_branches              = ["main", "develop"]
+      default_branch                  = "develop"
+      required_status_checks_contexts = [] // TODO: Add required status checks (check-fmt-opentofu, plan-opentofu)
+    },
+    {
       name          = ".github"
       description   = "GitHub repository"
       visibility    = "public"
