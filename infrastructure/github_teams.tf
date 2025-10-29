@@ -9,14 +9,14 @@ locals {
       privacy     = "closed"
     },
     "infrastructure-engineers" = {
-      description    = "Maze Infrastructure engineers"
-      privacy        = "closed"
-      parent_team    = "engineers"
+      description = "Maze Infrastructure engineers"
+      privacy     = "closed"
+      parent_team = "engineers"
     },
     "release-engineers" = {
-      description    = "Maze Release engineers"
-      privacy        = "closed"
-      parent_team    = "engineers"
+      description = "Maze Release engineers"
+      privacy     = "closed"
+      parent_team = "engineers"
     },
   }
 }
