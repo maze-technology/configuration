@@ -6,18 +6,21 @@
   },
   "packageRules": [
     {
+      "matchManagers": ["github-actions"],
+      "schedule": ["every weekday"],
+      "reviewers": ["maze-technology/infrastructure-engineers"]
+    },
+    {
       "matchManagers": ["terraform"],
       "matchPaths": ["bootstrap/**"],
       "schedule": ["every weekday"],
-      "reviewers": ["maze-technology/infrastructure-engineers"],
-      "groupName": "Terraform Bootstrap Dependencies"
+      "reviewers": ["maze-technology/infrastructure-engineers"]
     },
     {
       "matchManagers": ["terraform"],
       "matchPaths": ["infrastructure/**"],
       "schedule": ["every weekday"],
-      "reviewers": ["maze-technology/infrastructure-engineers"],
-      "groupName": "Terraform Infrastructure Dependencies"
+      "reviewers": ["maze-technology/infrastructure-engineers"]
     }
   ],
   "dependencyDashboard": true,
