@@ -7,7 +7,7 @@ resource "github_branch_protection" "protections" {
           pattern                         = branch
           required_status_checks_contexts = repo.required_status_checks_contexts
         }
-      ]
+      ] if lookup(repo, "archived", false) == false
     ]) : "${item.repository_id}:${item.pattern}" => item
   }
 
