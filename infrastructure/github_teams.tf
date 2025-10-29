@@ -4,36 +4,34 @@ locals {
       description = "Maze Project managers"
       privacy     = "closed"
     },
-    "release-engineers" = {
-      description = "Maze Release engineers"
-      privacy     = "closed"
-    },
-    "github-engineers" = {
-      description = "Maze GitHub engineers"
-      privacy     = "closed"
-    },
-    "spec-engineers" = {
-      description = "Maze Specification engineers"
+    "engineers" = {
+      description = "Maze Engineers"
       privacy     = "closed"
     },
     "infrastructure-engineers" = {
       description = "Maze Infrastructure engineers"
       privacy     = "closed"
+      parent_team = "engineers"
     },
-    "java-engineers" = {
-      description = "Maze Java engineers"
+    "release-engineers" = {
+      description = "Maze Release engineers"
       privacy     = "closed"
+      parent_team = "engineers"
     },
-    "python-engineers" = {
-      description = "Maze Python engineers"
-      privacy     = "closed"
-    }
   }
 }
 
-resource "github_team" "teams" {
-  for_each    = local.teams_config
+resource "github_team" "parents" {
+  for_each    = { for k, v in local.teams_config : k => v if !contains(keys(v), "parent_team") }
   name        = each.key
   description = each.value.description
   privacy     = each.value.privacy
+}
+
+resource "github_team" "children" {
+  for_each       = { for k, v in local.teams_config : k => v if contains(keys(v), "parent_team") }
+  name           = each.key
+  description    = each.value.description
+  privacy        = each.value.privacy
+  parent_team_id = github_team.parents[each.value.parent_team].id
 }

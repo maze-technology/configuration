@@ -7,9 +7,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["infrastructure-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name,
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -23,9 +21,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["infrastructure-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name,
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -39,8 +35,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name,
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -54,7 +49,7 @@ locals {
       is_template   = false
       dynamic_pages = true
       push_teams = [
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -68,10 +63,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["python-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["github-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -85,10 +77,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["java-engineers"].name,
-        github_team.teams["github-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -102,10 +91,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["java-engineers"].name,
-        github_team.teams["github-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -120,10 +106,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["java-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -137,10 +120,7 @@ locals {
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["java-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -154,9 +134,7 @@ locals {
       is_template   = true
       dynamic_pages = false
       push_teams = [
-        github_team.teams["github-engineers"].name,
-        github_team.teams["spec-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
@@ -170,9 +148,7 @@ locals {
       is_template   = true
       dynamic_pages = false
       push_teams = [
-        github_team.teams["java-engineers"].name,
-        github_team.teams["github-engineers"].name,
-        github_team.teams["release-engineers"].name
+        github_team.parents["engineers"].name
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]

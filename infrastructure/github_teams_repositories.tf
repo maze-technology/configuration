@@ -7,6 +7,11 @@ locals {
       }
     ]
   ])
+
+  teams_by_name = merge(
+    { for k, t in github_team.parents : t.name => t.id },
+    { for k, t in github_team.children : t.name => t.id }
+  )
 }
 
 resource "github_team_repository" "push_teams" {
@@ -15,7 +20,7 @@ resource "github_team_repository" "push_teams" {
     "${pair.repo_name}-${pair.team_name}" => pair
   }
 
-  team_id    = github_team.teams[each.value.team_name].id
+  team_id    = local.teams_by_name[each.value.team_name]
   repository = github_repository.repo[each.value.repo_name].name
   permission = "push"
 }
