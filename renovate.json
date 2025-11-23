@@ -13,7 +13,7 @@
     },
     {
       "matchManagers": ["terraform"],
-      "matchPaths": ["bootstrap/**", "infrastructure/**"],
+      "matchFileNames": ["bootstrap/**", "infrastructure/**"],
       "groupName": "Terraform",
       "schedule": ["every weekday"],
       "reviewers": ["maze-technology/infrastructure-engineers"]
