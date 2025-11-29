@@ -1,3 +1,7 @@
+data "github_app" "renovate" {
+  slug = "renovate"
+}
+
 resource "github_branch_protection" "protections" {
   for_each = {
     for item in flatten([
@@ -27,7 +31,7 @@ resource "github_branch_protection" "protections" {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = each.value.pattern != "main"
     required_approving_review_count = 1
-    pull_request_bypassers          = ["/backnight", "renovate[bot]"] # TODO: To remove backnight at some point ;)
+    pull_request_bypassers          = ["/backnight", data.github_app.renovate.node_id] # TODO: To remove backnight at some point ;)
   }
 
   restrict_pushes {
