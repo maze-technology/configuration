@@ -22,6 +22,7 @@ locals {
       dynamic_pages = false
       push_teams = [
         github_team.children["infrastructure-engineers"].name,
+        github_team.children["release-engineers"].name,
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
