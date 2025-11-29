@@ -15,13 +15,13 @@ locals {
       required_status_checks_contexts = ["check-fmt-opentofu", "plan-opentofu"]
     },
     {
-      name          = "global-infrastructure"
-      description   = "Repository managing global infrastructure resources"
+      name          = "infrastructure-global"
+      description   = "Repository managing global infrastructure configuration"
       visibility    = "public"
       is_template   = false
       dynamic_pages = false
       push_teams = [
-        github_team.parents["engineers"].name,
+        github_team.children["infrastructure-engineers"].name,
       ]
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
