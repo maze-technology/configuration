@@ -16,7 +16,7 @@
     {
       "matchManagers": ["terraform"],
       "matchFileNames": ["bootstrap/**", "infrastructure/**"],
-      "groupName": "Terraform",
+      "groupName": "OpenTofu/Terraform",
       "schedule": ["every weekday"],
       "reviewers": ["maze-technology/infrastructure-engineers"]
     }
