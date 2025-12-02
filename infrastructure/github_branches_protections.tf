@@ -9,6 +9,7 @@ resource "github_branch_protection" "protections" {
         for branch in repo.protected_branches : {
           repository_id                   = repo.name
           pattern                         = branch
+          default_branch                  = lookup(repo, "default_branch", "main")
           required_status_checks_contexts = repo.required_status_checks_contexts
         }
       ] if lookup(repo, "archived", false) == false
@@ -35,7 +36,7 @@ resource "github_branch_protection" "protections" {
   }
 
   restrict_pushes {
-    push_allowances = each.value.pattern == "main" ? [github_team.children["release-engineers"].node_id] : [data.github_app.renovate.node_id]
+    push_allowances = each.value.pattern == each.value.default_branch ? [data.github_app.renovate.node_id] : [github_team.children["release-engineers"].node_id]
   }
 
   depends_on = [null_resource.repositories_branches] # INFO: This is a workaround to avoid Terraform/OpenTofu issue with required_status_checks_contexts blocking the branch creation
