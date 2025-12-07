@@ -69,7 +69,7 @@ locals {
       branches                        = ["develop"]
       protected_branches              = ["main", "develop"]
       default_branch                  = "develop"
-      required_status_checks_contexts = []
+      required_status_checks_contexts = ["test"]
     },
     {
       name          = "commons"
